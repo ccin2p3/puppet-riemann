@@ -1,17 +1,18 @@
 {
   "name": "ccin2p3-riemann",
   "version": "0.1.0",
-  "source": "",
+  "source": "https://github.com/ccin2p3/puppet-riemann",
   "author": "ccin2p3",
   "license": "CeCILL 2.1",
-  "summary": "",
-  "description": "",
-  "project_page": "",
+  "summary": "Manage the riemann streams processor and its dashboard",
+  "project_page": "https://github.com/ccin2p3/puppet-riemann",
   "dependencies": [
     {
-      "name": "ccin2p3/ccin2p3_stdlib"
+      "name": "puppetlabs/stdlib",
+			"version_requirement" : "> 4.4.0"
     },{
-      "name": "puppetlabs/stdlib"
-    }
+      "name": "puppetlabs/concat",
+			"version_requirement" : "> 1.1.1"
+		}
   ]
 }

@@ -11,11 +11,14 @@
 # i.e. the ones implementing riemann::subscribe
 # see http://riemann.io/api/riemann.config.html
 #
-define riemann::stream::publish {
-  Riemann::Server::Config::Fragment <| section == 'subscription' |> {
-    section => "streams ${title}",
+define riemann::stream::publish (
+  $streams
+)
+{
+  Riemann::Server::Config::Fragment <| section == 'subscription' and pubclass == $title |> {
+    section => "streams ${streams}",
     target  => 'riemann_server_config',
-    order   => "20-${title}-20"
+    order   => "20-${streams}-20"
   }
 }
 # vim: ft=puppet

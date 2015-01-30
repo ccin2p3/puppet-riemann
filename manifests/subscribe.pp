@@ -24,11 +24,13 @@ define riemann::subscribe (
   $batch = '200 1',
   $queue_size = '300',
   $stream = 'where true',
-  $async_queue_name = "aq-${::clientcert}"
+  $async_queue_name = "aq-${::clientcert}",
+  $pubclass = 'default'
 ) {
   @riemann::server::config::fragment { "subscribe ${::clientcert} ${title}":
-    content => template('riemann/subscribe.erb'),
-    section => 'subscription'
+    content  => template('riemann/subscribe.erb'),
+    section  => 'subscription',
+    pubclass => $pubclass
   }
 }
 # vim: ft=puppet

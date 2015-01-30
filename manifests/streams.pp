@@ -1,9 +1,11 @@
 #
 define riemann::streams (
-  $publish = true
+  $publish = true,
+  $pubclass = ['default'],
 )
 {
   validate_bool($publish)
+  validate_array($pubclass)
   if $riemann::debug {
     $debug_header = ";begin ${title}\n"
     $debug_footer = ";end ${title}\n"
@@ -23,7 +25,9 @@ define riemann::streams (
   }
   # publish to subscribers
   if $publish {
-    riemann::stream::publish { $title: }
+    riemann::stream::publish { $pubclass:
+      streams  => $title,
+    }
   }
   # footer
   riemann::server::config::fragment { "streams ${title} footer":
