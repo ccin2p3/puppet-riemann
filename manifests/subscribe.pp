@@ -28,9 +28,9 @@ define riemann::subscribe (
   $pubclass = 'default'
 ) {
   @@riemann::server::config::fragment { "subscribe ${::clientcert} ${title}":
-    content  => template('riemann/subscribe.erb'),
-    section  => 'subscription',
-    pubclass => $pubclass
+    content    => template('riemann/subscribe.erb'),
+    section    => 'subscription',
+    pubclass   => $pubclass
   }
 }
 # vim: ft=puppet

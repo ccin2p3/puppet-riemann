@@ -14,7 +14,8 @@ define riemann::server::config::fragment (
   $section = 'root',
   $order = '42',
   $target = false,
-  $pubclass = 'default'
+  $pubclass = 'default',
+  $subscriber = $::clientcert
 )
 {
   ::concat::fragment { $title:
