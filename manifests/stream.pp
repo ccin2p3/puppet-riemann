@@ -8,10 +8,10 @@ define riemann::stream (
 
   if $riemann::debug {
     $debug_header = ";begin stream ${title}\n"
-    $debug_footer = ";end stream ${title}\n"
+    $debug_footer = "\n;end stream ${title}"
   }
   @riemann::server::config::fragment { "stream ${title}":
     section => 'streams',
-    content => "${debug_header}  ${content}\n${debug_footer}"
+    content => "${debug_header}  ${content}${debug_footer}"
   }
 }

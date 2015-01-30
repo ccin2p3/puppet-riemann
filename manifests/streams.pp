@@ -15,8 +15,8 @@ class riemann::streams (
     $debug_header = ";begin streams\n"
     $debug_footer = ";end streams\n"
   }
-  $header_content = "${debug_header}(streams\n"
-  $footer_content = "${debug_footer})\n"
+  $header_content = "${debug_header}(streams"
+  $footer_content = "${debug_footer})"
   # header
   riemann::server::config::fragment { 'streams header':
     content => $header_content,

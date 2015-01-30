@@ -18,7 +18,7 @@ define riemann::server::config::fragment (
 )
 {
   ::concat::fragment { $title:
-    content => $content,
+    content => "${content}\n",
     target  => 'riemann_server_config',
     order   => $order
   }
