@@ -1,17 +1,28 @@
 #
+class { '::riemann': debug => true}
 class { '::riemann::server':
   config_dir => '/tmp/riemann'
 }
 
-class { 'riemann::server::config::listen':
-  sse         => {
+riemann::server::config::listen { 'sse':
+  options => {
     'headers' => '{"Access-Control-Allow-Origin" "*"}'
-  },
-  tcp      => {
-    'port' => 5555,
-  },
-  udp           => {
-    'interface' => '0.0.0.0'
-  },
-  ws        => true,
+  }
 }
+riemann::server::config::listen { 'tcp localhost':
+  type    => 'tcp',
+  options => {
+    'port' => '55555',
+    'host' => '127.0.0.1'
+  }
+}
+riemann::server::config::listen { 'tcp *':
+  type    => 'tcp',
+  options => {
+    port    => 5555,
+    host    => '0.0.0.0'
+  }
+}
+riemann::server::config::listen { 'udp': }
+riemann::server::config::listen { 'ws': }
+

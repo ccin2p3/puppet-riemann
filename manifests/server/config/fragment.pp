@@ -10,7 +10,7 @@
 # for riemann::server::config
 #
 define riemann::server::config::fragment (
-  $content,
+  $content = $title,
   $section = 'root',
   $order = '42',
   $pubclass = 'default',

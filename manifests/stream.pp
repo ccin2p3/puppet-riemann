@@ -1,6 +1,6 @@
 #
 define riemann::stream (
-  $content,
+  $content = $title
 )
 {
   include ::riemann::server
