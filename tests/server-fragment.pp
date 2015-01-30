@@ -6,31 +6,24 @@ class { '::riemann::server':
   config_dir => '/tmp/riemann',
 }
 
-riemann::streams { 'top stream':
-  publish => true
-}
-riemann::streams { 'another top stream':
+class { 'riemann::streams':
   publish => true
 }
 
 riemann::stream { 'index everything':
-  streams => 'top stream',
   content => '(index)'
 }
 
 riemann::stream { 'compute rate by service and host':
-  streams => 'top stream',
   content => '(by [:host :service] (rate 5 (index)))'
 }
 
 riemann::stream { 'do nothing':
-  streams => 'another top stream',
   content => 'true'
 }
 
 # lookup config in hiera
 riemann::stream { 'aggregate':
-  streams => 'another top stream',
   content => hiera('riemann::stream::aggr','true')
 }
 

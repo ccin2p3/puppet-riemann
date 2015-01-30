@@ -3,7 +3,7 @@ class { '::riemann::server':
   config_dir => '/tmp/riemann',
 }
 
-riemann::streams { 'default':
+class { 'riemann::streams':
   pubclass => [ 'a', 'b', 'c' ]
 }
 
@@ -26,5 +26,5 @@ riemann::subscribe { 'changed state':
   batch      => '100 1',
   queue_size => '300',
   stream     => 'changed :state {:init "ok"}',
-  pubclass      => 'c'
+  pubclass      => ['d', 'c']
 }

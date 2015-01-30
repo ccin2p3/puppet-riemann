@@ -12,13 +12,12 @@
 # see http://riemann.io/api/riemann.config.html
 #
 define riemann::stream::publish (
-  $streams
 )
 {
   Riemann::Server::Config::Fragment <<| section == 'subscription' and pubclass == $title and subscriber != $::clientcert |>> {
-    section => "streams ${streams}",
+    section => 'streams',
     target  => 'riemann_server_config',
-    order   => "20-${streams}-20"
+    order   => '20-streams-20'
   }
 }
 # vim: ft=puppet

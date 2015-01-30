@@ -1,20 +1,17 @@
 #
 define riemann::stream (
   $content,
-  $streams = 'default',
 )
 {
   include ::riemann::server
-  if ! defined(Riemann::Streams[$streams]) {
-    riemann::streams { $streams: }
-  }
+  include ::riemann::streams
 
   if $riemann::debug {
     $debug_header = ";begin stream ${title}\n"
     $debug_footer = ";end stream ${title}\n"
   }
   @riemann::server::config::fragment { "stream ${title}":
-    section => "streams ${streams}",
+    section => 'streams',
     content => "${debug_header}  ${content}\n${debug_footer}"
   }
 }
