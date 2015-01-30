@@ -13,14 +13,13 @@ define riemann::server::config::fragment (
   $content,
   $section = 'root',
   $order = '42',
-  $target = false,
   $pubclass = 'default',
   $subscriber = $::clientcert
 )
 {
   ::concat::fragment { $title:
     content => $content,
-    target  => $target,
+    target  => 'riemann_server_config',
     order   => $order
   }
 }

@@ -16,7 +16,6 @@ define riemann::stream::publish (
 {
   Riemann::Server::Config::Fragment <<| section == 'subscription' and pubclass == $title and subscriber != $::clientcert |>> {
     section => 'streams',
-    target  => 'riemann_server_config',
     order   => '20-streams-20'
   }
 }
