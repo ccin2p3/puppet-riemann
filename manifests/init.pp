@@ -14,15 +14,7 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class riemann (
-  $package_name = $riemann::params::package_name,
-  $service_name = $riemann::params::service_name,
+  $debug = false
 ) inherits riemann::params {
-
-  # validate parameters here
-
-  class { 'riemann::install': } ->
-  class { 'riemann::config': } ~>
-  class { 'riemann::service': } ->
-  Class['riemann']
 }
 # vim: ft=puppet

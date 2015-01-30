@@ -12,14 +12,10 @@
 class riemann::params {
   case $::osfamily {
     'Debian': {
-      $package_name = 'riemann'
-      $service_name = 'riemann'
     }
     'RedHat', 'Amazon': {
       case $::operatingsystemmajrelease {
         '6', '7': {
-          $package_name = 'riemann'
-          $service_name = 'riemann'
         }
         default: {
           fail("operatingsystemmajrelease `${::operatingsystemmajrelease}` not supported")
