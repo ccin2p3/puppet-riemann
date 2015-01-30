@@ -14,3 +14,4 @@ riemann::stream {'(by :service
 riemann::server::config::fragment { 'my custom fragment':
   content => '(periodically-expire 10 {:keep-keys [:host :service :tags]})'
 }
+include riemann::server::config::logging

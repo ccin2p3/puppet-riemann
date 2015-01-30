@@ -40,6 +40,7 @@ class riemann::server::params {
     }
   }
   $config_include_dir = 'conf.d'
+  $log_file = '/var/log/riemann/riemann.log'
 }
 
 # vim: ft=puppet
