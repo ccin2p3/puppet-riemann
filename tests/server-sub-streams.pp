@@ -16,12 +16,14 @@ riemann::stream { 'compute rate by service and host':
 }
 
 # this is on the subscriber side:
+# subscribes to subclass 'a'
 riemann::subscribe { 'riemann internals':
   batch      => '100 1',
   queue_size => '300',
   stream     => 'where (service #"riemann%")',
   pubclass      => 'a'
 }
+# subscribes to subclasses 'c' and 'd'
 riemann::subscribe { 'changed state':
   batch      => '100 1',
   queue_size => '300',
