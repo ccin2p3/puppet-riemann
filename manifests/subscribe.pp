@@ -27,7 +27,7 @@ define riemann::subscribe (
   $async_queue_name = "aq-${::clientcert}",
   $pubclass = 'default'
 ) {
-  @riemann::server::config::fragment { "subscribe ${::clientcert} ${title}":
+  @@riemann::server::config::fragment { "subscribe ${::clientcert} ${title}":
     content  => template('riemann/subscribe.erb'),
     section  => 'subscription',
     pubclass => $pubclass
