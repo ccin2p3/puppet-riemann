@@ -4,13 +4,13 @@
 # Contributor(s) : ccin2p3
 #
 
-# == Class riemann::server::install
+# == Class riemann::install
 #
-# This class is called from riemann::server
+# This class is called from riemann
 # It should provide its package resources
 #
-class riemann::server::install {
-  package { $riemann::server::package_name:
+class riemann::install {
+  package { $riemann::package_name:
     ensure => present,
   }
 }

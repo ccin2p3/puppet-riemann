@@ -18,12 +18,12 @@ class riemann::streams (
   $header_content = "${debug_header}(streams"
   $footer_content = "${debug_footer})"
   # header
-  riemann::server::config::fragment { 'streams header':
+  riemann::config::fragment { 'streams header':
     content => $header_content,
     order   => '20-streams-00',
   }
   # collect stream
-  Riemann::Server::Config::Fragment <| section == 'streams' |> {
+  Riemann::Config::Fragment <| section == 'streams' |> {
     order  => '20-streams-10',
   }
   # publish to subscribers
@@ -31,7 +31,7 @@ class riemann::streams (
     riemann::stream::publish { $pubclass: }
   }
   # footer
-  riemann::server::config::fragment { 'streams footer':
+  riemann::config::fragment { 'streams footer':
     content => $footer_content,
     order   => '20-streams-99',
   }

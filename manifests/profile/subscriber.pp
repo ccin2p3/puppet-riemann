@@ -11,7 +11,7 @@
 #
 class riemann::profile::subscriber inherits riemann::profile
 {
-  include ::riemann::server
+  include ::riemann
   include ::riemann::subscription
 }
 # vim: ft=puppet

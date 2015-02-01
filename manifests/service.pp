@@ -4,21 +4,21 @@
 # Contributor(s) : ccin2p3
 #
 
-# == Class riemann::server::service
+# == Class riemann::service
 #
-# This class is called from riemann::server
+# This class is called from riemann
 # It ensures the server service is running
 #
-class riemann::server::service {
-  service { $riemann::server::service_name:
+class riemann::service {
+  service { $riemann::service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
   }
-  exec { 'riemann_server_reload':
+  exec { 'riemann_reload':
     path        => [ '/bin', '/usr/bin' ],
-    command     => $riemann::server::reload_command,
+    command     => $riemann::reload_command,
     refreshonly => true,
   }
 }

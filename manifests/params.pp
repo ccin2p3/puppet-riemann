@@ -12,10 +12,23 @@
 class riemann::params {
   case $::osfamily {
     'Debian': {
+      $package_name = 'riemann'
+      $service_name = 'riemann'
+      $config_dir = '/etc/riemann'
+      $init_config_file = '/etc/default/riemann'
+      $reload_command = "/usr/sbin/service ${service_name} reload"
     }
     'RedHat', 'Amazon': {
+      $package_name = 'riemann'
+      $service_name = 'riemann'
+      $config_dir = '/etc/riemann'
+      $init_config_file = '/etc/sysconfig/riemann'
       case $::operatingsystemmajrelease {
-        '6', '7': {
+        '6': {
+          $reload_command = "/sbin/service ${service_name} reload"
+        }
+        '7': {
+          $reload_command = "/usr/bin/systemctl ${service_name} reload"
         }
         default: {
           fail("operatingsystemmajrelease `${::operatingsystemmajrelease}` not supported")
@@ -26,6 +39,8 @@ class riemann::params {
       fail("osfamily `${::osfamily}` not supported")
     }
   }
+  $config_include_dir = 'conf.d'
+  $log_file = '/var/log/riemann/riemann.log'
 }
 
 # vim: ft=puppet

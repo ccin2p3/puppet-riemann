@@ -1,7 +1,7 @@
 #
-class riemann::server::config::logging (
+class riemann::logging (
   $options = {
-    'file' => "\"${riemann::server::params::log_file}\""
+    'file' => "\"${riemann::params::log_file}\""
   }
 ) {
   if $riemann::debug {
@@ -11,7 +11,7 @@ class riemann::server::config::logging (
   if $options {
     $options_str = [':',join(join_keys_to_values($options,' '),' :')]
   }
-  riemann::server::config::fragment { "riemann_server_config_${title}":
+  riemann::config::fragment { "riemann_server_config_${title}":
     content => "${debug_header}(logging/init {${options_str}})${debug_footer}",
     order   => '12'
   }

@@ -13,7 +13,7 @@
 #
 class riemann::profile::proxy () inherits riemann::profile
 {
-  include ::riemann::server
+  include ::riemann
   include ::riemann::publish
 }
 # vim: ft=puppet

@@ -4,12 +4,12 @@
 # Contributor(s) : ccin2p3
 #
 
-# == Define riemann::server::config::fragment
+# == Define riemann::config::fragment
 #
 # This defined type implements config fragments
-# for riemann::server::config
+# for riemann::config
 #
-define riemann::server::config::fragment (
+define riemann::config::fragment (
   $content = $title,
   $section = 'root',
   $order = '42',

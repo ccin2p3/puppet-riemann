@@ -1,17 +1,27 @@
 #
 define riemann::stream (
-  $content = $title
+  $content = $title,
+  $publish = false,
 )
 {
-  include ::riemann::server
+  include ::riemann
   include ::riemann::streams
 
   if $riemann::debug {
     $debug_header = ";begin stream ${title}\n"
     $debug_footer = "\n;end stream ${title}"
   }
-  @riemann::server::config::fragment { "stream ${title}":
+  
+  if is_array($content) {
+    $sexpr = sexpr($content)
+  }
+  elsif is_string($content) {
+    $sexpr = "(${content})"
+  } else {
+    fail("riemann::stream `${title}` is neither of type array or string")
+  }
+  @riemann::config::fragment { "stream ${title}":
     section => 'streams',
-    content => "${debug_header}  ${content}${debug_footer}"
+    content => "${debug_header}  ${sexpr}${debug_footer}"
   }
 }

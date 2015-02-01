@@ -6,7 +6,7 @@
 
 # == Define riemann::subscribe
 #
-# This class type implements a subscription to a riemann server
+# This class type implements a subscription to a riemann instance
 # If included, the host will be sent events from the hosts
 # implementing riemann::publish using forward
 # see http://riemann.io/api/riemann.streams.html#var-forward
@@ -27,7 +27,7 @@ define riemann::subscribe (
   $async_queue_name = "aq-${::clientcert}",
   $pubclass = 'default'
 ) {
-  @@riemann::server::config::fragment { "subscribe ${::clientcert} ${title}":
+  @@riemann::config::fragment { "subscribe ${::clientcert} ${title}":
     content    => template('riemann/subscribe.erb'),
     section    => 'subscription',
     pubclass   => $pubclass
