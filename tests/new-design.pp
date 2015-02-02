@@ -13,6 +13,24 @@ riemann::listen { 'sse':
     'headers' => '{"Access-Control-Allow-Origin" "*"}'
   }
 }
+
+# custom config fragment
+riemann::config::fragment { 'this is just a pass-through':
+  content => "; maybe a comment\n;and another",
+  order   => '00'
+}
+
+# custom config s-expression
+riemann::config::fragment { 'plop':
+  content => [
+    'def', 'hostname',
+      [ '.getHostName',
+        ['java.net.InetAddress/getLocalHost']
+      ]
+  ],
+  order => '01'
+}
+
 # string style
 riemann::stream { 'index all events with default ttl':
   content => '(default :ttl 300 (index))'

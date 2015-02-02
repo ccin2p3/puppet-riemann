@@ -35,7 +35,8 @@ end
 
 module Puppet::Parser::Functions
   newfunction(:sexpr, :type => :rvalue, :doc => <<-EOS
-This converts an array into an s-expression: a nested tree structure. For each array element, if it is a:
+This converts a nested structure into a string containing an s-expression.
+It will serialize each element it encounters recursively:
 
 * String: will be passed as-is
 * Array:  will be a clojure vector
@@ -66,6 +67,8 @@ When passed to sexpr will yield the string:
       (throttle 1 1
         (smap folds/sum
           (with {:host nil} index))))))
+
+Arguments: $object $indent_level
     EOS
   ) do |arguments|
 
@@ -81,7 +84,7 @@ When passed to sexpr will yield the string:
     else
       raise(Puppet::Error, "sexpr(): only one argument accepted")
     end
-    return _serel(arguments[0],indent) + "\n"
+    return _serel(arguments[0],indent) # + "\n"
   end
 end
 

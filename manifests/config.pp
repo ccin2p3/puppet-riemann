@@ -23,15 +23,15 @@ class riemann::config {
   file { "${config_dir}/${config_include_dir}":
     ensure => directory
   } ->
-  concat { 'riemann_server_config':
+  concat { 'riemann_config':
     ensure  => present,
     path    => "${config_dir}/riemann.config",
   }
-  riemann::config::fragment { 'riemann_server_config_header':
+  riemann::config::fragment { 'header':
     content => template('riemann/riemann.config-header.erb'),
     order   => '00'
   }
-  riemann::config::fragment { 'riemann_server_config_footer':
+  riemann::config::fragment { 'footer':
     content => template('riemann/riemann.config-footer.erb'),
     order   => '999'
   }

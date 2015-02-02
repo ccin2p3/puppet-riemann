@@ -11,7 +11,7 @@ class riemann::logging (
   if $options {
     $options_str = [':',join(join_keys_to_values($options,' '),' :')]
   }
-  riemann::config::fragment { "riemann_server_config_${title}":
+  riemann::config::fragment { "logging_${title}":
     content => "${debug_header}(logging/init {${options_str}})${debug_footer}",
     order   => '12'
   }

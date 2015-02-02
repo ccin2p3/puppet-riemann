@@ -12,11 +12,11 @@ class riemann::streams (
   validate_bool($publish)
   validate_array($pubclass)
   if $riemann::debug {
-    $debug_header = ";begin streams\n"
-    $debug_footer = ";end streams\n"
+    $debug_header = ";begin streams"
+    $debug_footer = ";end streams"
   }
-  $header_content = "${debug_header}(streams"
-  $footer_content = "${debug_footer})"
+  $header_content = "${debug_header}\n(streams"
+  $footer_content = "${debug_footer})\n"
   # header
   riemann::config::fragment { 'streams header':
     content => $header_content,
