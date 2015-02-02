@@ -49,25 +49,27 @@ riemann::stream { 'out of ideas for title':
 #
 
 # on the sender
-riemann::stream { 'collectd':
-  content => 'tagged "collectd"',
-  publish => true
-}
-riemann::stream { 'state changes':
-  content => [
-    'changed-state', { 'init' => '"ok"'},
-    [ 'stable', 60, ':state',
-      [ 'email', '"opsteam@myorg.tld"' ]
-    ]
-  ],
-  publish => true,
+class { 'riemann::streams':
+  publish  => true,
+  pubclass => ['collectd', 'changed-state', 'riemann']
 }
 
 # on the receiver
 riemann::subscribe { 'collectd':
   queue_size => '1000',
+  stream     => 'tagged "collectd"',
+  pubclass   => 'collectd'
 }
 riemann::subscribe { 'subscribe to state changes':
-  batch  => '100 1',
-  stream => 'state changes',
+  batch    => '100 1',
+  stream   => 'changed-state {:init "ok"}',
+  pubclass => 'riemann',
 }
+
+riemann::subscribe { 'riemann internals':
+  batch      => '100 1',
+  queue_size => '300',
+  stream     => 'where (service #"riemann%")',
+  pubclass   => 'a'
+}
+
