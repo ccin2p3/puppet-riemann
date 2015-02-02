@@ -2,7 +2,7 @@ require 'spec_helper'
 
 os_fixtures = @os_fixtures
 
-describe 'riemann::mytype' do
+describe 'riemann::stream' do
   context 'supported operating systems' do
     os_fixtures.each do |osname, osfixtures|
       describe "with title=mytitle" do
@@ -16,17 +16,7 @@ describe 'riemann::mytype' do
               osfixtures[:facts]
             end
             it { should compile.with_all_deps }
-            it { should contain_notify('riemann::mytype mytitle()') }
-          end
-        end
-        describe "with param myparam=awesome" do
-          let(:params) {{ :myparam => 'awesome' }}
-          describe "on #{osname}" do
-            let(:facts) do
-              osfixtures[:facts]
-            end
-            it { should compile.with_all_deps }
-            it { should contain_notify('riemann::mytype mytitle(awesome)') }
+            it { should contain_riemann__config__fragment('stream mytitle') }
           end
         end
       end

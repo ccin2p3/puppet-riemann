@@ -2,7 +2,7 @@ require 'spec_helper'
 
 os_fixtures = @os_fixtures
 
-describe 'riemann::foo' do
+describe 'riemann::streams' do
   context 'supported operating systems' do
     os_fixtures.each do |osname, osfixtures|
       describe "without any parameters" do
@@ -12,11 +12,8 @@ describe 'riemann::foo' do
             osfixtures[:facts]
           end
           it { should compile.with_all_deps }
-          it { should contain_class('riemann::foo') }
-          it { should contain_class('riemann::foo::params') }
-          it { should contain_class('riemann::foo::config') }
-          it { should contain_class('riemann::foo::install').that_comes_before('riemann::foo::config') }
-          it { should contain_class('riemann::foo::service').that_subscribes_to('riemann::foo::config') }
+          it { should contain_riemann__config__fragment('streams header') }
+          it { should contain_riemann__config__fragment('streams footer') }
         end
       end
     end

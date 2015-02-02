@@ -17,12 +17,15 @@ end
     :facts => {
       :operatingsystem      => 'Scientific',
       :osfamily             => 'RedHat',
-      :operatingsystemmajrelease => 6
+      :operatingsystemmajrelease => 6,
     },
     :params => {
-      :global_param => 'foo',
-      :profile_myprof_param => 'bar',
-      :role_myrole_param => 'baz'
+      :package_name => 'riemann',
+      :service_name => 'riemann',
+      :config_dir => '/etc/riemann',
+      :init_config_file => '/etc/sysconfig/riemann',
+      :reload_command => '/sbin/service riemann reload',
+      :log_file => '/var/log/riemann/riemann.log'
     }
   },
   'Debian8' => {
@@ -32,9 +35,12 @@ end
       :operatingsystemmajrelease => 8
     },
     :params => {
-      :global_param => 'foo',
-      :profile_myprof_param => 'bar',
-      :role_myrole_param => 'baz'
+      :package_name => 'riemann',
+      :service_name => 'riemann',
+      :config_dir => '/etc/riemann',
+      :init_config_file => '/etc/default/riemann',
+      :reload_command => '/usr/sbin/service riemann reload',
+      :log_file => '/var/log/riemann/riemann.log'
     }
   },
 }
