@@ -1,7 +1,7 @@
 #
 class { 'riemann':
   config_dir => '/tmp/riemann',
-  debug      => true
+  #  debug      => true
 }
 
 include riemann::logging
@@ -15,7 +15,7 @@ riemann::listen { 'sse':
 }
 # string style
 riemann::stream { 'index all events with default ttl':
-  content => 'default :ttl 300 (index)'
+  content => '(default :ttl 300 (index))'
 }
 
 # tree style

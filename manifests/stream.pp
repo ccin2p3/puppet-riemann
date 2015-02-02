@@ -12,14 +12,7 @@ define riemann::stream (
     $debug_footer = "\n;end stream ${title}"
   }
   
-  if is_array($content) {
-    $sexpr = sexpr($content,1)
-  }
-  elsif is_string($content) {
-    $sexpr = "(${content})"
-  } else {
-    fail("riemann::stream `${title}` is neither of type array or string")
-  }
+  $sexpr = sexpr($content,1)
   @riemann::config::fragment { "stream ${title}":
     section => 'streams',
     content => "${debug_header}  ${sexpr}${debug_footer}"
