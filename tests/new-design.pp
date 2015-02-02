@@ -1,6 +1,7 @@
 #
 class { 'riemann':
-  config_dir => '/tmp/riemann'
+  config_dir => '/tmp/riemann',
+  debug      => true
 }
 
 include riemann::logging

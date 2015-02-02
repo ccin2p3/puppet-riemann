@@ -13,7 +13,7 @@ define riemann::stream (
   }
   
   if is_array($content) {
-    $sexpr = sexpr($content)
+    $sexpr = sexpr($content,1)
   }
   elsif is_string($content) {
     $sexpr = "(${content})"

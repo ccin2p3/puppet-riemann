@@ -3,21 +3,22 @@
 #
 
 def _serel *args
-  if args.length == 1
+  if args.length == 2
     level = 0
-  elsif args.length == 2
-    level = args[1]
+  elsif args.length == 3
+    level = args[2]
   else
     raise(Puppet::Error, "_serel(): one or two args only")
   end
   arg = args[0]
+  indent = args[1]
   result = ""
-  sp = ' ' * level * 2 + '  '
+  sp = ' ' * level * 2 + '  ' * indent
   case arg
   when Array
     inner = []
     arg.each do |a|
-      inner.push(_serel(a,level+1))
+      inner.push(_serel(a,indent,level+1))
     end
     result += "\n#{sp}(" + inner.join(' ') + ')'
   when Hash
@@ -72,11 +73,15 @@ When passed to sexpr will yield the string:
       return []
     end
 
-    if arguments.length == 1
-      return _serel(arguments[0])
+    indent = 0
+    if arguments.length == 2
+      indent = arguments[1].to_i
+    elsif arguments.length == 1
+      indent = 0
     else
       raise(Puppet::Error, "sexpr(): only one argument accepted")
     end
+    return _serel(arguments[0],indent) + "\n"
   end
 end
 
