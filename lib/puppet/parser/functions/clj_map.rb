@@ -33,7 +33,7 @@ Arguments: $hash
     end
     
     inner = []
-    arguments[0].each do |k,v|
+    arguments[0].sort.each do |k,v|
       inner.push(":#{k} #{v}")
     end
     result = '{' + inner.join(" ") + ')'

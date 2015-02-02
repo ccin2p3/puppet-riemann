@@ -23,7 +23,7 @@ def _serel *args
     result += "\n#{sp}(" + inner.join(' ') + ')'
   when Hash
     inner = []
-    arg.each do |k,v|
+    arg.sort.each do |k,v|
       inner.push(":#{k} #{v}")
     end
     result += '{' + inner.join(' ') + '}'
