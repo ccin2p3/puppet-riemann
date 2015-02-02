@@ -24,7 +24,7 @@ define riemann::subscribe (
   $batch = '200 1',
   $queue_size = '300',
   $stream = 'where true',
-  $async_queue_name = "aq-${::clientcert}",
+  $async_queue_name = "${::hostname}-${title}",
   $pubclass = 'default'
 ) {
   @@riemann::config::fragment { "subscribe ${::clientcert} ${title}":

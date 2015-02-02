@@ -2,4 +2,4 @@
   (let [client (tcp-client :host "<%=@clientcert%>")]
     (<%= @stream %>
       (batch <%=@batch%>
-        (async-queue! :<%=@async_queue_name%> {:queue-size <%=@queue_size%>} (forward client)))))
+        (async-queue! "<%=@async_queue_name%>" {:queue-size <%=@queue_size%>} (forward client)))))
