@@ -9,6 +9,7 @@ class riemann::streams (
   $pubclass = ['default'],
 )
 {
+  include riemann
   validate_bool($publish)
   validate_array($pubclass)
   if $riemann::debug {

@@ -9,12 +9,12 @@ define riemann::stream (
 
   if $riemann::debug {
     $debug_header = ";begin stream ${title}\n"
-    $debug_footer = "\n;end stream ${title}"
+    $debug_footer = ";end stream ${title}"
   }
   
   $sexpr = sexpr($content,1)
   @riemann::config::fragment { "stream ${title}":
     section => 'streams',
-    content => "${debug_header}  ${sexpr}${debug_footer}"
+    content => "${debug_header}${sexpr}${debug_footer}"
   }
 }

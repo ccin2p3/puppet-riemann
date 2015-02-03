@@ -14,7 +14,8 @@
 define riemann::stream::publish (
 )
 {
-  Riemann::Config::Fragment <<| section == 'subscription' and pubclass == $title and subscriber != $::clientcert |>> {
+  #Riemann::Config::Fragment <<| section == 'subscription' and pubclass == $title and subscriber != $::clientcert |>> {
+  Riemann::Config::Fragment <| section == 'subscription' and pubclass == $title and subscriber != $::clientcert |> {
     section => 'streams',
     order   => '20-streams-20'
   }
