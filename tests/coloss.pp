@@ -1,6 +1,6 @@
 class {'riemann':
   config_dir => '/tmp/riemann',
-  debug     => false
+  debug     => true
 }
 riemann::config::fragment { 'reaper':
   content => ['periodically-expire', 30],

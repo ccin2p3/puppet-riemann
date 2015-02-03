@@ -20,7 +20,7 @@ def _serel *args
     arg.each do |a|
       inner.push(_serel(a,indent,level+1))
     end
-    if level != 0
+    if level > 0
       result += "\n"
     end
     result += "#{sp}(" + inner.join(' ') + ')'
@@ -90,7 +90,7 @@ Arguments: $object $indent_level
     if arguments[0].kind_of?(String)
       return '  ' * indent + arguments[0] + "\n"
     end
-    return _serel(arguments[0],indent) # + "\n"
+    return _serel(arguments[0],indent) + "\n"
   end
 end
 

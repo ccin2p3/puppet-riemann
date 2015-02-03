@@ -13,7 +13,7 @@ class riemann::config {
   $debug = $riemann::debug
   if $debug {
     $debug_header = ";begin ${title}"
-    $debug_footer = ";end ${title}"
+    $debug_footer = ";end ${title}\n"
   }
   $config_dir = $::riemann::config_dir
   $config_include_dir = $::riemann::config_include_dir
