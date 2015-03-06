@@ -14,7 +14,8 @@ define riemann::config::fragment (
   $section = 'root',
   $order = '42',
   $pubclass = 'default',
-  $subscriber = $::clientcert
+  $subscriber = $::clientcert,
+  $puppet_environment = $environment
 )
 {
   ::concat::fragment { $title:
