@@ -13,13 +13,9 @@ class riemann::service {
   service { $riemann::service_name:
     ensure     => running,
     enable     => true,
+    restart    => $riemann::reload_command,
     hasstatus  => true,
     hasrestart => true,
-  }
-  exec { 'riemann_reload':
-    path        => [ '/bin', '/usr/bin' ],
-    command     => $riemann::reload_command,
-    refreshonly => true,
   }
 }
 # vim: ft=puppet
