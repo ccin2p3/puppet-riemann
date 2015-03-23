@@ -22,12 +22,17 @@
 # 
 define riemann::subscribe (
   $batch = '200 1',
-  $queue_size = '300',
+  $async_queue_options = {
+    ':core-pool-size' => '4',
+    ':max-pool-size'  => '128',
+    ':queue-size'     => '1000',
+  },
   $stream = 'where true',
   $async_queue_name = "${::hostname}-${title}",
   $pubclass = 'default',
   $puppet_environment = $environment
 ) {
+  $async_queue_options_string = join(join_keys_to_values($async_queue_options, ' '),' ')
   @@riemann::config::fragment { "subscribe ${::clientcert} ${title}":
     content            => template('riemann/subscribe.erb'),
     section            => 'subscription',
