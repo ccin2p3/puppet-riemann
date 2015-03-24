@@ -18,7 +18,7 @@ define riemann::config::fragment (
   $puppet_environment = $environment
 )
 {
-  ::concat::fragment { $title:
+  ::concat::fragment { "riemann::config ${title}":
     content => sexpr($content),
     target  => 'riemann_config',
     order   => $order
