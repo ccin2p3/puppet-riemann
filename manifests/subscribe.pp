@@ -32,7 +32,7 @@ define riemann::subscribe (
   $pubclass = 'default',
   $puppet_environment = $environment
 ) {
-  $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' '),' '))
+  $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' ')),' ')
   @@riemann::config::fragment { "subscribe ${::clientcert} ${title}":
     content            => template('riemann/subscribe.erb'),
     section            => 'subscription',
