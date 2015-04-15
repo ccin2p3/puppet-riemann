@@ -1,20 +1,17 @@
 #
 define riemann::stream (
   $content = $title,
-  $publish = false,
+  $streams = 'default',
 )
 {
   include ::riemann
-  include ::riemann::streams
-
-  if $riemann::debug {
-    $debug_header = ";begin stream ${title}\n"
-    $debug_footer = ";end stream ${title}"
+  if !defined(Riemann::Streams[$streams]) {
+    riemann::streams { $streams: }
   }
-  
+
   $sexpr = sexpr($content,1)
   @riemann::config::fragment { "stream ${title}":
-    section => 'streams',
-    content => "${debug_header}${sexpr}${debug_footer}"
+    section => "streams ${streams}",
+    content => $sexpr
   }
 }

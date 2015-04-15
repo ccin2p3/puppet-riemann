@@ -12,11 +12,28 @@
 # see http://riemann.io/api/riemann.config.html
 #
 define riemann::stream::publish (
+  $content = ['',''],
+  $streams = 'default'
 )
 {
-  Riemann::Config::Fragment <<| puppet_environment == $environment and section == 'subscription' and pubclass == $title and subscriber != $::clientcert |>> {
-    section => 'streams',
-    order   => '20-streams-20'
+  # validation
+  validate_array($content)
+  if (!count($content) == 2) {
+    fail("published stream `${title}`: array 'stream' should contain exactly 2 elements")
   }
+  if !defined(Riemann::Streams[$streams]) {
+    riemann::streams { $streams: }
+  }
+  @riemann::config::fragment { "stream ${streams} publish ${title} part1":
+    content => $content[0],
+    section => "streams ${streams}",
+    order   => "20-streams-${title}-23"
+  }
+  @riemann::config::fragment { "stream ${streams} publish ${title} part3":
+    content => $content[1],
+    section => "streams ${streams}",
+    order   => "20-streams-${title}-26"
+  }
+  
 }
 # vim: ft=puppet

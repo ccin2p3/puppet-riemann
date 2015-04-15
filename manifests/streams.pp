@@ -4,36 +4,60 @@
 # this class will call (streams ...) in a riemann config
 # and construct its contents using riemann::stream defines
 #
-class riemann::streams (
-  $publish = true,
-  $pubclass = ['default'],
+define riemann::streams (
+  $let = [],
+  $order = "50-${title}"
 )
 {
   include riemann
-  validate_bool($publish)
-  validate_array($pubclass)
-  if $riemann::debug {
-    $debug_header = ';begin streams'
-    $debug_footer = "\n;end streams"
+  # let
+  riemann::config::fragment { "let ${title} header":
+    content => '(let [',
+    order   => "${order}-00"
   }
-  $header_content = "${debug_header}\n(streams"
-  $footer_content = ")${debug_footer}\n"
-  # header
-  riemann::config::fragment { 'streams header':
-    content => $header_content,
-    order   => '20-streams-00',
+  # let items given as params
+  if (is_array($let)) {
+    $let_body = join($let,' ')
+  } elsif (is_hash($let)) {
+    $let_body = join(sort(join_keys_to_values($let,' ')),' ')
+  } elsif (is_string($let)) {
+    $let_body = $let
+  } else {
+    fail("streams: 'let' must be array, hash or string")
   }
-  # collect stream
-  Riemann::Config::Fragment <| section == 'streams' |> {
-    order  => '20-streams-10',
+  riemann::config::fragment { "let ${title} body":
+    content => "      ${let_body}",
+    order   => "${order}-10"
   }
-  # publish to subscribers
-  if $publish {
-    riemann::stream::publish { $pubclass: }
+  # collect virtual and exported let items from riemann::let
+  Riemann::Config::Fragment <| section == "let streams ${title}" |> {
+    order   => "${order}-12"
   }
-  # footer
-  riemann::config::fragment { 'streams footer':
-    content => $footer_content,
-    order   => '20-streams-99',
+  Riemann::Config::Fragment <<| section == "let streams ${title}" and puppet_environment == $::environment |>> {
+    order   => "${order}-13"
+  }
+  riemann::config::fragment { "let ${title} body end":
+    content => ']',
+    order   => "${order}-15"
+  }
+  riemann::config::fragment { "streams ${title} header":
+    content => '(streams',
+    order   => "${order}-20"
+  }
+  # collect stream functions from riemann::stream
+  Riemann::Config::Fragment <| section == "streams ${title}" |> {
+    order   => "${order}-25"
+  }
+  # collect stream functions from exported riemann::subscribe
+  Riemann::Config::Fragment <<| section == "streams ${title}" and puppet_environment == $::environment |>> {
+    order   => "${order}-27"
+  }
+  riemann::config::fragment { "streams ${title} footer":
+    content => ')',
+    order   => "${order}-28"
+  }
+  riemann::config::fragment { "let ${title} footer":
+    content => ')',
+    order   => "${order}-99"
   }
 }

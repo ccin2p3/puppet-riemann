@@ -1,0 +1,4 @@
+      <%=@async_queue_name%>
+        (batch <%=@batch%>
+          (async-queue! :<%=@async_queue_name%> {<%=@async_queue_options_string%>}
+            (forward (tcp-client :host "<%=@clientcert%>"))))

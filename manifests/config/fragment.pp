@@ -13,7 +13,6 @@ define riemann::config::fragment (
   $content = $title,
   $section = 'root',
   $order = '42',
-  $pubclass = 'default',
   $subscriber = $::clientcert,
   $puppet_environment = $environment
 )

@@ -1,0 +1,54 @@
+#
+class { 'riemann':
+  config_dir => '/tmp/riemann'
+}
+
+include riemann::logging
+riemann::listen { 'tcp': }
+riemann::listen { 'udp': }
+riemann::listen { 'ws': }
+riemann::listen { 'sse':
+  options     => {
+    'headers' => '{"Access-Control-Allow-Origin" "*"}'
+  }
+}
+# string style
+riemann::stream { 'index all events with default ttl':
+  content => 'default :ttl 300 (index)'
+}
+
+# array style
+riemann::stream { 'compute total users':
+  content => [
+    'where (service "users/users")',
+    'with {:service "total users" :ttl 300 :host nil}',
+    'coalesce 10',
+    'smap folds/sum',
+    'index'
+  ]
+}
+# hash style
+riemann::stream { 'out of ideas for title':
+  content  => [
+    'where (service #"^riemann")'
+    'with'      => {
+      'service' => "plop",
+      'ttl'     => 100,
+    }
+  ]
+}
+# subscribe to remote stream
+riemann::subscribe::stream { 'collectd':
+  queue_size => '1000',
+  pubclass  => 'collectd',
+  content   => 'tagged "collectd"'
+}
+
+riemann::subscribe::stream { 'email syslog changed states':
+  pubclass => 'syslog',
+  content  => [
+    'changed-state {:init "ok"}',
+    'stable 60 :state',
+    'email "opsteam@myorg.tld"'
+  ]
+}

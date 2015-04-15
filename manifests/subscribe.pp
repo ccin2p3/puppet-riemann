@@ -27,16 +27,23 @@ define riemann::subscribe (
     ':max-pool-size'  => '128',
     ':queue-size'     => '1000',
   },
-  $stream = 'where true',
-  $async_queue_name = "${::hostname}-${title}",
-  $pubclass = 'default',
+  $stream = $title,
+  $streams = 'default',
   $puppet_environment = $environment
 ) {
+  $_sanitized_title = regsubst($title,' ','_')
+  $async_queue_name = "${::hostname}-${_sanitized_title}"
   $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' ')),' ')
-  @@riemann::config::fragment { "subscribe ${::clientcert} ${title}":
-    content            => template('riemann/subscribe.erb'),
-    section            => 'subscription',
-    pubclass           => $pubclass,
+  # 'let' statement fragment
+  @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
+    content            => template('riemann/subscribe-let.erb'),
+    section            => "let streams ${streams}",
+    puppet_environment => $puppet_environment
+  }
+  # 'stream' statement
+  @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${::clientcert}":
+    content            => template('riemann/subscribe-stream.erb'),
+    section            => "streams ${streams}",
     puppet_environment => $puppet_environment
   }
 }

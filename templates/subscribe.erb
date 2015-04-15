@@ -1,5 +1,0 @@
-; publish `<%=@name%>` to `<%=@clientcert%>`
-  (let [client (tcp-client :host "<%=@clientcert%>")]
-    (<%= @stream %>
-      (batch <%=@batch%>
-        (async-queue! "<%=@async_queue_name%>" {<%=@async_queue_options_string%>} (forward client)))))
