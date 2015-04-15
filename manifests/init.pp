@@ -12,6 +12,7 @@
 # resources for riemann are present
 #
 class riemann (
+  $use_hiera = true,
   $package_name = $riemann::params::package_name,
   $service_name = $riemann::params::service_name,
   $config_dir = $riemann::params::config_dir,
@@ -27,5 +28,9 @@ class riemann (
   class { 'riemann::config': } ~>
   class { 'riemann::service': } ->
   Class['riemann']
+  
+  if ($use_hiera) {
+    include '::riemann::hiera'
+  }
 }
 # vim: ft=puppet
