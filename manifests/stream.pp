@@ -11,7 +11,8 @@ define riemann::stream (
 
   $sexpr = sexpr($content,1)
   @riemann::config::fragment { "stream ${title}":
-    section => "streams ${streams}",
-    content => $sexpr
+    section    => "streams ${streams}",
+    subscriber => 'local',
+    content    => $sexpr
   }
 }

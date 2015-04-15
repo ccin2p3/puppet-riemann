@@ -17,7 +17,8 @@ define riemann::let (
   }
 
   @riemann::config::fragment { "let ${title}":
-    section => "let streams ${streams}",
-    content => "      ${content_string}"
+    section    => "let streams ${streams}",
+    subscriber => 'local',
+    content    => "      ${content_string}"
   }
 }

@@ -25,14 +25,16 @@ define riemann::stream::publish (
     riemann::streams { $streams: }
   }
   @riemann::config::fragment { "stream ${streams} publish ${title} part1":
-    content => $content[0],
-    section => "streams ${streams}",
-    order   => "20-streams-${title}-23"
+    content    => $content[0],
+    section    => "streams ${streams}",
+    subscriber => 'local',
+    order      => "20-streams-${title}-23"
   }
   @riemann::config::fragment { "stream ${streams} publish ${title} part3":
-    content => $content[1],
-    section => "streams ${streams}",
-    order   => "20-streams-${title}-26"
+    content    => $content[1],
+    section    => "streams ${streams}",
+    subscriber => 'local',
+    order      => "20-streams-${title}-26"
   }
   
 }

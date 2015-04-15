@@ -38,12 +38,14 @@ define riemann::subscribe (
   @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
     content            => template('riemann/subscribe-let.erb'),
     section            => "let streams ${streams}",
+    subscriber         => $::clientcert,
     puppet_environment => $puppet_environment
   }
   # 'stream' statement
   @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${::clientcert}":
     content            => template('riemann/subscribe-stream.erb'),
     section            => "streams ${streams}",
+    subscriber         => $::clientcert,
     puppet_environment => $puppet_environment
   }
 }
