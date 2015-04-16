@@ -16,6 +16,7 @@ define riemann::stream::publish (
   $streams = 'default'
 )
 {
+  $stream = $title
   # validation
   validate_array($content)
   if (!count($content) == 2) {
@@ -37,10 +38,10 @@ define riemann::stream::publish (
     order      => "20-streams-${title}-26"
   }
   # collect stream functions from exported riemann::subscribe
-  Riemann::Config::Fragment <<| section == "let streams ${streams}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
+  Riemann::Config::Fragment <<| section == "let streams ${streams} ${stream}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
     order   => "50-${streams}-13"
   }
-  Riemann::Config::Fragment <<| section == "streams ${streams}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
+  Riemann::Config::Fragment <<| section == "streams ${streams} ${stream}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
     order   => "50-${streams}-25"
   }
   
