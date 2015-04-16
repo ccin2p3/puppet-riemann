@@ -22,6 +22,8 @@ define riemann::stream::publish (
   if (!count($content) == 2) {
     fail("published stream `${title}`: array 'stream' should contain exactly 2 elements")
   }
+  if (!$content[0]) { fail("published stream `${title}`: array 'stream' first element is undef") }
+  if (!$content[1]) { fail("published stream `${title}`: array 'stream' second element is undef") }
   if !defined(Riemann::Streams[$streams]) {
     riemann::streams { $streams: }
   }
