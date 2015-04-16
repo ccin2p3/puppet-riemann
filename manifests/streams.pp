@@ -50,7 +50,7 @@ define riemann::streams (
   }
   # collect stream functions from exported riemann::subscribe
   Riemann::Config::Fragment <<| section == "streams ${title}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
-    order   => "${order}-27"
+    order   => "${order}-25"
   }
   riemann::config::fragment { "streams ${title} footer":
     content => ')',
