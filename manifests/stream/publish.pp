@@ -36,6 +36,13 @@ define riemann::stream::publish (
     subscriber => 'local',
     order      => "20-streams-${title}-26"
   }
+  # collect stream functions from exported riemann::subscribe
+  Riemann::Config::Fragment <<| section == "let streams ${streams}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
+    order   => "50-${streams}-13"
+  }
+  Riemann::Config::Fragment <<| section == "streams ${streams}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
+    order   => "50-${streams}-25"
+  }
   
 }
 # vim: ft=puppet

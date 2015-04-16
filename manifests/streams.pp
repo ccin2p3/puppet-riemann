@@ -33,9 +33,6 @@ define riemann::streams (
   Riemann::Config::Fragment <| section == "let streams ${title}" and subscriber == 'local' |> {
     order   => "${order}-12"
   }
-  Riemann::Config::Fragment <<| section == "let streams ${title}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
-    order   => "${order}-13"
-  }
   riemann::config::fragment { "let ${title} body end":
     content => ']',
     order   => "${order}-15"
@@ -46,10 +43,6 @@ define riemann::streams (
   }
   # collect stream functions from riemann::stream
   Riemann::Config::Fragment <| section == "streams ${title}" and subscriber == 'local' |> {
-    order   => "${order}-25"
-  }
-  # collect stream functions from exported riemann::subscribe
-  Riemann::Config::Fragment <<| section == "streams ${title}" and puppet_environment == $::environment and subscriber != $::clientcert |>> {
     order   => "${order}-25"
   }
   riemann::config::fragment { "streams ${title} footer":
