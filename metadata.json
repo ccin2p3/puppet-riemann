@@ -1,6 +1,6 @@
 {
   "name": "ccin2p3-riemann",
-  "version": "0.1.0",
+  "version": "v0.3.0",
   "source": "https://github.com/ccin2p3/puppet-riemann",
   "author": "ccin2p3",
   "license": "CeCILL 2.1",
