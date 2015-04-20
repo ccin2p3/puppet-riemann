@@ -1,6 +1,9 @@
 #
 
-class riemann::hiera {
+class riemann::hiera (
+  $hiera_prefix = ''
+)
+  {
   riemann::hiera::create_resources {
     ['config::fragment','listen','let','streams','stream','stream::publish','subscribe']:
   }
@@ -8,10 +11,11 @@ class riemann::hiera {
   
 define riemann::hiera::create_resources {
   $rsname = "riemann::${title}"
+  $varname = "${hiera_prefix}${rsname}"
   create_resources (
     $rsname,
     hiera_hash(
-      $rsname,
+      $varname,
       {}
     )
   )
