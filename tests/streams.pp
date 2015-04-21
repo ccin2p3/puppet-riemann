@@ -2,6 +2,8 @@ class {'riemann':
     config_dir => '/tmp/riemann',
 }
 
+include 'riemann::logging'
+
 riemann::streams {'foo':
   let     => { 'index' => '(index)' }
 }
