@@ -40,18 +40,11 @@ riemann::stream { 'rate':
 
 riemann::subscribe { 'riemann_internals':
   batch      => '100 1',
-  queue_size => '100',
-  stream     => 'where (service #"^riemann")',
-  pubclass   => 'riemann'
+  stream     => 'all'
 }
 riemann::subscribe { 'collectd_users':
   batch      => '100 1',
-  queue_size => '100',
-  stream     => 'where (and (tagged "collectd") (service "users/users"))',
-  pubclass   => 'collectd'
+  stream     => 'somestream'
 }
 
-class {'riemann::streams':
-  pubclass => ['collectd','syslog','riemann']
-}
 

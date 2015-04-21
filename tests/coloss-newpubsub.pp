@@ -13,12 +13,12 @@ riemann::listen { 'udp': }
 
 # on the publishing side
 riemann::stream::publish { 'collectd':
-  stream => ['(where (tagged "collectd")',')']
+  content => ['(where (tagged "collectd")',')']
 }
 
 # on (another|same) publisher
 riemann::stream::publish { 'changed':
-  stream => [
+  content => [
     '(where (not (expired? event))
         (changed-state {:init "ok"}',
     # subscribers will be added here in between elements

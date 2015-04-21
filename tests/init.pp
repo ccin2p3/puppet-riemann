@@ -9,4 +9,7 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-include riemann
+
+class { 'riemann':
+  config_dir => '/tmp/riemann'
+}

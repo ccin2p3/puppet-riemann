@@ -1,9 +1,9 @@
 #
-class {'riemann::server':
+class {'riemann':
   config_dir => '/tmp/riemann'
 }
 
-riemann::server::config::listen { ['udp','tcp','ws', 'sse', 'graphite']: }
+riemann::listen { ['udp','tcp','ws', 'sse', 'graphite']: }
 riemann::stream { '(index)': }
 riemann::stream {'(by :service
     (coalesce
@@ -11,7 +11,7 @@ riemann::stream {'(by :service
         (with :host nil
           (index)))))':
 }
-riemann::server::config::fragment { 'my custom fragment':
+riemann::config::fragment { 'my custom fragment':
   content => '(periodically-expire 10 {:keep-keys [:host :service :tags]})'
 }
-include riemann::server::config::logging
+include riemann::logging

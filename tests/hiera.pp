@@ -1,13 +1,6 @@
 #
 class { '::riemann':
-  debug      => true
-}
-class { '::riemann::server':
   config_dir => '/tmp/riemann',
-}
-
-class { 'riemann::streams':
-  publish => true
 }
 
 riemann::stream { 'index everything':
@@ -30,11 +23,5 @@ riemann::stream { 'aggregate':
 # this is on the subscriber side:
 riemann::subscribe { 'riemann internals':
   batch      => '100 1',
-  queue_size => '300',
-  stream     => 'where (service #"riemann%")'
-}
-riemann::subscribe { 'changed state':
-  batch      => '100 1',
-  queue_size => '300',
-  stream     => 'changed :state {:init "ok"}',
+  stream     => 'foo'
 }

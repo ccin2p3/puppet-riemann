@@ -1,7 +1,6 @@
 #
 class { 'riemann':
   config_dir => '/tmp/riemann',
-  #  debug      => true
 }
 
 include riemann::logging
@@ -68,27 +67,17 @@ riemann::stream { 'out of ideas for title':
 #
 
 # on the sender
-class { 'riemann::streams':
-  publish  => true,
-  pubclass => ['collectd', 'changed-state', 'riemann']
-}
+riemann::stream::publish { 'everything': }
 
 # on the receiver
-riemann::subscribe { 'collectd':
-  queue_size => '1000',
-  stream     => 'tagged "collectd"',
-  pubclass   => 'collectd'
-}
+riemann::subscribe { 'collectd': }
 riemann::subscribe { 'subscribe to state changes':
   batch    => '100 1',
-  stream   => 'changed-state {:init "ok"}',
-  pubclass => 'riemann',
+  stream   => 'other',
 }
 
 riemann::subscribe { 'riemann internals':
   batch      => '100 1',
-  queue_size => '300',
-  stream     => 'where (service #"riemann%")',
-  pubclass   => 'a'
+  stream     => 'everything'
 }
 

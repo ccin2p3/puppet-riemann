@@ -1,6 +1,5 @@
 #
-class { '::riemann': debug => true }
-class { '::riemann::server':
+class { '::riemann':
   config_dir => '/tmp/riemann',
 }
 
@@ -15,11 +14,8 @@ riemann::stream { 'compute rate by service and host':
 # this is on the subscriber side:
 riemann::subscribe { 'riemann internals':
   batch      => '100 1',
-  queue_size => '300',
-  stream     => 'where (service #"riemann%")'
+  stream     => 'service~riemann'
 }
 riemann::subscribe { 'changed state':
-  batch      => '100 1',
-  queue_size => '300',
-  stream     => 'changed :state {:init "ok"}',
+  stream     => 'changed-state',
 }
