@@ -1,0 +1,20 @@
+#!/bin/sh -eu
+
+[ ! -d "./smoke" ] && { echo "No tests to run"; exit 0; }
+
+for manifest in $(find ./smoke -type f -name 'OK_*.pp'); do
+	echo '*'
+	echo '* Testing manifest `'$manifest'`'
+	echo '*'
+ 	puppet apply $manifest
+	echo '*'
+	echo '* Passed OK *'
+done
+for manifest in $(find ./smoke -type f -name 'NOK_*.pp'); do
+	echo '*'
+	echo '* Testing manifest `'$manifest'`'
+	echo '*'
+ 	! puppet apply $manifest
+	echo '*'
+	echo '* Failed OK *'
+done

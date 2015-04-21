@@ -5,5 +5,5 @@ Feel free to read them if the module's documentation isn't enough.
 
 ## Usage
 
-puppet apply tests/<filename.pp>
+./smoke/test
 
