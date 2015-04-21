@@ -16,6 +16,7 @@ describe 'riemann::stream' do
               osfixtures[:facts]
             end
             it { should compile.with_all_deps }
+            it { should contain_riemann__streams('default') }
             it { should contain_riemann__config__fragment('stream mytitle') }
           end
         end
