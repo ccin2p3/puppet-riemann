@@ -4,14 +4,15 @@ class riemann::logging (
     'file' => "\"${riemann::params::log_file}\""
   }
 ) {
+  include riemann
   if $riemann::debug {
     $debug_header = ";begin ${title}\n"
     $debug_footer = "\n;end ${title}"
   }
   if $options {
-    $options_str = [':',join(join_keys_to_values($options,' '),' :')]
+    $options_str = join([':',join(join_keys_to_values($options,' '),' :')],'')
   }
-  riemann::config::fragment { "logging_${title}":
+  riemann::config::fragment { $title:
     content => "${debug_header}(logging/init {${options_str}})${debug_footer}",
     order   => '12'
   }
