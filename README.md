@@ -1,5 +1,7 @@
 # Puppet Module riemann
 
+[![Build Status](https://travis-ci.org/ccin2p3/puppet-riemann.svg?branch=master)](https://travis-ci.org/ccin2p3/puppet-riemann)
+
 #### Table of Contents
 
 1. [Overview](#overview)
