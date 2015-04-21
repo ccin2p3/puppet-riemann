@@ -37,6 +37,7 @@ The main features of this module are:
 ### Setup Requirements
 
 You must ensure the riemann package is present on your package provider's repository. This module will not install packages from http://riemann.io.
+
 If you want to use the pubsub mechanism of this module, you need to have `storeconfigs` set to `true`.
 
 ## Usage
@@ -46,14 +47,18 @@ If you want to use the pubsub mechanism of this module, you need to have `storec
 ```Puppet
  # Use OS defaults
 include riemann
+```
 
+```Puppet
  # Override some defaults
 class {'riemann':
 	config_dir => '/opt/etc/riemann',
 	package_name => 'myriemann',
 	reload_command => 'pkill -HUP riemann'
 }
+```
 
+```Puppet
  # Use hiera to pull in configuration blocks
 class {'riemann':
   use_hiera => true
@@ -63,14 +68,14 @@ class {'riemann':
 ### Configuration blocks
 
 ```Puppet
- # surround streams with let expression
+ # surround default streams with let expression
 riemann::let { 'index':
   content => {
   	'index' => '(default :ttl 300 (index))'
   }
 }
 
- # add a stream function
+ # add a stream function to default streams
 riemann::stream {'00-index-everything-first':
   content => 'index'
 }
@@ -94,20 +99,23 @@ riemann::stream { '10-compute total users':
 
 ### Multiple streams blocks
 
-The most straightforward way to build your riemann configuration is defining (stream)[#define-stream] resources. Under the hood this will autodefine a (streams)[#define-streams] resource with *title* `default`. This `default` stream will be surrounded by a (let)[#define-let] block which can be used to define clojure aliases.
+The most straightforward way to build your riemann configuration is defining [stream](#define-riemannstream) resources. Under the hood this will autodefine a [streams](#define-riemannstreams) resource with *title* `default`. This `default` stream will be surrounded by a [let](#define-riemannlet) block which can be used to define clojure bindings.
 
-If you need multiple (streams)[#define-streams], you can do so by explicitly defining them, and assigning (stream)[#define-stream] resources to them. Here is an example which will generate two streams blocks with a stream function each.
+If you want multiple [streams](#define-riemannstreams), you can do so by explicitly defining them, and assigning [stream](#define-riemannstream) resources to them. Here is an example which will generate two `(streams …)` blocks with a stream function each.
 
-#### Example: Puppet code
+#### Puppet code
 
 ```Puppet
+ # custom fragment
 riemann::config::fragment {'index':
   content => '(def index (default {:ttl 30 :state "ok"} (index)))'
 }
 
+ # two streams
 riemann::streams {'index it':}
 riemann::streams {'tag it':}
 
+ # one stream function per stream
 riemann::stream {'index':
   streams => 'index it',
   content => 'index',
@@ -120,7 +128,7 @@ riemann::stream {'tag':
 }
 ```
 
-#### Example: Resulting clojure config
+#### Resulting clojure config
 
 ```Clojure
 (def index (default {:ttl 30 :state "ok"} (index)))
@@ -136,12 +144,12 @@ riemann::stream {'tag':
 
 ### Publish/subscribe
 
-Riemann servers can *subscribe* to other riemann servers which *publish* certain streams.
+Riemann nodes can *subscribe* to others which *publish* certain streams.
 Special care has been given to limit subscriptions to the same puppet environment.
 Here is an example that should be self explanatory. The published stream's content should be an array
 of two values which will be contatenated together with the subscriber's reference in between.
 
-#### Example: Puppet code
+#### Puppet code
 
 ##### On the publishing node
 
@@ -160,7 +168,7 @@ riemann::stream::publish {'NOK':
 riemann::subscribe {'NOK':}
 ```
 
-#### Example: Resulting riemann config
+#### Resulting clojure config
 
 ##### On the publishing node
 
@@ -182,12 +190,16 @@ riemann::subscribe {'NOK':}
   (streams))
 ```
 
-As you can see, an async queue is created on the publisher, and nothing in particular on the subscriber. The subscriber can specify async-queue and batching options.
+##### Notes
+
+* An async queue with batching is created on the publisher
+* No config is generated on the subscriber (no state)
+* The subscriber can specify async-queue and batching options
 
 ## Reference
 
 Most defined types will take as argument the name of the `streams` section to which they apply.
-For the sake of simplicity, this will default to the string `default`, which is fine if you only want one `(streams ...)` block in your config.
+For the sake of simplicity, this will default to the string `default`, which is fine if you only want one `(streams …)` block in your config.
 
 ### Class riemann
 
@@ -195,7 +207,7 @@ This is the base class. Most parameters will use OS specific values unless overr
 
 #### Parameters
 
-* `use_hiera` boolean controlling if hiera should be used to create resources. Variable names are the same as the defined types. Defaults to `true`
+* `use_hiera` boolean controlling if [hiera](#class-riemannhiera) should be used to create resources. Variable names are the same as the defined types. Defaults to `true`
 * `package_name` string containing the name of the Package to install. Defaults to OS specific value (see `params.pp`)
 * `service_name` string containing the name of the Service to manage. Defaults to OS specific value (see `params.pp`)
 * `config_dir` string containing the path to the configuration directory. Defaults to OS specific value (see `params.pp`)
@@ -205,7 +217,7 @@ This is the base class. Most parameters will use OS specific values unless overr
 
 ### Class riemann::hiera
 
-This class is responsible for automatically creating resources for the module's provided defined types. All defined types listed in this document will be pulled in if `use_hiera` is set to `true` (default behaviour). The name convention in hiera is to use the same name for the variable as the pointed type. You can provide a prefix to the variable name.
+This class is responsible for automatically creating resources for the module's provided defined types. All defined types listed in this document will be pulled in if `use_hiera` is set to `true` (default behaviour). The name convention is to use the same name for the variable as the pointed type. You can provide a prefix to the variable name.
 
 #### Parameters
 
@@ -224,16 +236,26 @@ mysite_riemann::stream:
 
 ### Define riemann::streams
 
-This type defines a `(streams … )` block which will contain stream functions. If you only need one of these, you can omit it because it will be created for you (with `$title='default'`) when defining a (stream)[#define-riemann-stream].
+This type defines a `(streams … )` block which will contain stream functions. If you only need one of these, you can omit it because it will be created for you (with `$title='default'`) when defining a [stream](#define-riemannstream).
 
 #### Parameters
 
-* `let` array containing alias blocks. Defaults to `[]`
+* `let` array containing bindings. Defaults to `[]`
 * `order` string which will let you order different streams
+
+#### Example
+
+```Puppet
+riemann::streams {'mystream':}
+riemann::streams {'myotherstream':
+  let => 'index (index)',
+  order => '00'
+}
+```
 
 ### Define riemann::let
 
-This type will let you (no pun intended) define (same here) symbols for the surrounded `streams` block. This has the same function as the `let` parameter of (streams)[#define-riemann-streams].
+This type will let you (no pun intended) define (same here) symbols for the surrounded `(streams …)` block. This has the same effect as the `let` parameter of [streams](#define-riemannstreams).
 
 #### Parameters
 
@@ -244,6 +266,7 @@ This type will let you (no pun intended) define (same here) symbols for the surr
 
 ```Puppet
 riemann::let { 'rate':
+  streams => 'mystream',
   content => {
   	rate => '(rate 5 (with :service "req rate" index))'
   }
@@ -257,15 +280,19 @@ This type defines configuration blocks containing stream functions *i.e.* that w
 #### Parameters
 
 * `content` string or structure describing the stream function. If a string is provided, it will be passed as-is. Otherwise the module will try its best at generating an s-expression. The latter feature should be considered experimental.
-* `streams` string referencing the targeted (streams)[#define-riemann-streams] section.
+* `streams` string referencing the targeted [streams](#define-riemannstreams) section.
 
 #### Examples
 
 ```Puppet
+ # stream targeting 'default' stream (verbatim)
 riemann::stream { 'state_changes':
   content => '(changed-state {:init "ok"} index)'
 }
+
+ # stream targeting 'mystream' (puppet style)
 riemann::stream { 'rate':
+  streams => 'mystream',
   content => [
     'by [:service :host]',
     [
@@ -280,10 +307,12 @@ riemann::stream { 'rate':
 This is the publisher part of this module's pubsub model.
 Use this for forwarding streams to other riemann nodes.
 
+The way this currently works is by creating a `let` binding per subscription for the publisher's targeted `(streams …)` block. The published stream consists of two halves between which the subscriber binding will be squeezed. I hope to find a better implementation (patches welcome).
+
 #### Parameters
 
-* `content` Array with two elements. The first element being the first part of the expression, before the subscriber alias. The second being the second part, after the subscriber. If no subscriber is defined in your site, the stream will basically be a noop stream.
-* `streams` string referencing the streams part. Defaults to `default`
+* `content` Array with two elements. The first element of the expression comes before the subscriber binding. The second comes after the subscriber. If no subscriber is defined in your site, the stream will basically be a noop stream (patches welcome). Defaults to something which will forward all events (the code is embarassing).
+* `streams` string referencing the targeted streams section. Defaults to `default`
 
 #### Example
 
@@ -293,6 +322,10 @@ riemann::stream::publish { 'service-foo':
 }
 ```
 
+#### Note
+
+If you want to forward all events, just use the default, *e.g.* `riemann::stream::publish {'all':}`.
+
 ### Define riemann::subscribe
 
 This is the subscriber part of this module's pubsub model.
@@ -301,10 +334,10 @@ In terms of the node's configuration, this will have no effect locally. The stat
 
 #### Parameters
 
-* `stream` string describing stream to subscribe to. All publishers having the equivalent (riemann::stream::publish)[#define-riemann-stream-publish] counterpart will send events to us
-* `streams` as usual
-* `batch` string describing batch properties. See [riemann.io/api/batching]. Defaults too '200 1' *i.e.* batches of 200 events maximum or 1 second maximum.
-* `async_queue_options` hash describing the options of the async-queue which will be set up on the remote riemann instance. Defaults to `{':core-pool-size' => '4',':max-pool-size'=>'128',':queue-size'=>'1000'}`
+* `stream` string describing stream to subscribe to. All publishers having the equivalent [riemann::stream::publish](#define-riemannstreampublish) counterpart will forward events to us
+* `streams` string describing streams corresponding to the publishing side
+* `batch` string describing [batching](http://riemann.io/api/riemann.streams.html#var-batch) properties. Defaults too `'200 1'` *i.e.* send batches of events once either 200 events have accumulated or 1 second has passed.
+* `async_queue_options` hash describing the options of the [async-queue](http://riemann.io/api/riemann.config.html#var-async-queue%21) which will be set up on the remote riemann instance. Defaults to `{':core-pool-size' => '4',':max-pool-size'=>'128',':queue-size'=>'1000'}`
 
 #### Example
 
@@ -320,11 +353,11 @@ riemann::subscribe {'service-foo':
 
 ### Define riemann::listen
 
-Set up listeners *e.g.* servers. Should be self-explanatory. If it isn't please complain on github.
+Set up listeners *e.g.* servers. Should be self-explanatory. If it isn't please complain. Not sure why I named this "listener" instead of "server".
 
 #### Parameters
 
-* `type` string type of listener, *e.g.* `tcp`, `graphite`, …. Defaults to the resource's title
+* `type` string type of server, *e.g.* [`tcp`](http://riemann.io/api/riemann.config.html#var-tcp-server), [`graphite`](http://riemann.io/api/riemann.config.html#var-graphite-server), …. Defaults to the resource's title
 * `options` hash for specifying options to listener
 
 #### Examples
@@ -347,11 +380,11 @@ riemann::listen { 'ws':
 
 ### Class riemann::logging
 
-Riemann logger
+Set up Riemann [logger](http://riemann.io/api/riemann.logging.html).
 
 #### Parameters
 
-* `options` Hash with custom options. See Riemann documentation
+* `options` Hash with custom options. Keys will be joined with values. Defaults to `'file' => '"${riemann::params::log_file}"'`
 
 #### Examples
 
@@ -365,11 +398,11 @@ class {'riemann::logging':
 
 ### Define riemann::config::fragment
 
-Defines custom riemann block. If you don't like (riemann::stream)[#define-riemann-stream] you can use this instead to make your own streams.
+Defines custom riemann block. If you don't like [riemann::stream](#define-riemannstream) you can use this instead to make your own streams.
 
 #### Parameters
 
-* `content` string or structure
+* `content` string or structure (will be converted to s-expression using DWIM)
 * `order` string controlling the ordering in the file
 
 #### Examples
@@ -385,16 +418,17 @@ riemann::config::fragment {'george':
 
 Known issues (patches welcome):
 
-* published streams syntax is unflexible. This should be improved with puppet4 parser syntax
-* target config file formatting is horrible. This should be improved with passing the generated config to a formatter
-* config reload is fine as long as config restart isn't needed. This would need doing conditional reload/restarts depending on type of change. tricky
+* published streams syntax is unflexible. This should be improved *e.g.* with puppet4 parser syntax
+* target config file formatting is horrible. This should be improved with passing the generated config to a formatter (would require a [concat](https://forge.puppetlabs.com/puppetlabs/concat) patch)
+* config reload is fine as long as config restart isn't needed. This would require doing conditional reload/restarts depending on type of change. tricky
 * let blocks and published streams without subscribers can be empty: while this doesn't impair riemann, it's ugly and should be improved. Not sure this is even possible with exported resources
-* the exported resources model for pubsub is quite painful to implement. Maybe use puppetdbquery or datacat in the future
+* the exported resources model for pubsub is quite painful to implement. Maybe use [puppetdbquery](https://forge.puppetlabs.com/dalen/puppetdbquery) or [datacat](https://forge.puppetlabs.com/richardc/datacat) in the future
+* rspec coverage is poor (sorry)
 
 ## Development
 
 Please submit your PRs on
-(github)[http://github.com/ccin2p3/puppet-riemann]
+[github](http://github.com/ccin2p3/puppet-riemann)
 
 ### Testing
 
@@ -405,6 +439,6 @@ bundle exec rake spec
 
 ### Issues
 
-https://gitlab.in2p3.fr/cc-in2p3-puppet-service/riemann
+[freenode \#riemann @faxmodem](irc://freenode/riemann), [github](http://github.com/ccin2p3/puppet-riemann/issues), [gitlab](https://gitlab.in2p3.fr/cc-in2p3-puppet-service/riemann)
 
 [//]: # vim: ft=markdown
