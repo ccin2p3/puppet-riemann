@@ -5,7 +5,7 @@ before_install:
   - rm Gemfile.lock || true
   - sudo apt-get update -qq
 install:
-  - sudo apt-get -qq install puppet
+  - sudo apt-get -qq install puppet riemann
   - bundle install
 before_script:
   - mkdir -p ~/.puppet/modules
@@ -20,6 +20,7 @@ script:
   - bundle exec rake test
   - ./smoke/test
 env:
+  - PUPPET_VERSION="~> 3.4.0"
   - PUPPET_VERSION="~> 3.5.0"
   - PUPPET_VERSION="~> 3.6.0"
   - PUPPET_VERSION="~> 3.7.0"
