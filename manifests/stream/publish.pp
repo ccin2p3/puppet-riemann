@@ -12,7 +12,7 @@
 # see http://riemann.io/api/riemann.config.html
 #
 define riemann::stream::publish (
-  $content = ['',''],
+  $content = [' ',' '],
   $streams = 'default'
 )
 {
