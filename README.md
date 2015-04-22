@@ -38,9 +38,11 @@ The main features of this module are:
 
 ### Setup Requirements
 
-You must ensure the riemann package is present on your package provider's repository. This module will not install packages from http://riemann.io.
-
-If you want to use the pubsub mechanism of this module, you need to have `storeconfigs` set to `true`.
+* Puppet >= 3.5.0
+* Puppet module puppetlabs-stdlib
+* Puppet module puppetlabs-concat
+* The riemann package must be present on your package provider's repository. This module will not install [official packages](http://riemann.io) (patches welcome)
+* The pubsub mechanism of this module requires `storeconfigs = true`.
 
 ## Usage
 
