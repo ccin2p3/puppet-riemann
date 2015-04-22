@@ -5,7 +5,9 @@ before_install:
   - rm Gemfile.lock || true
   - sudo apt-get update -qq
 install:
-  - sudo apt-get -qq install puppet riemann
+  - sudo apt-get -qq install puppet openjdk-7-jre wget
+  - wget -O riemann.deb https://aphyr.com/riemann/riemann_0.2.9_all.deb
+  - sudo dpkg -i riemann.deb
   - bundle install
 before_script:
   - mkdir -p ~/.puppet/modules
