@@ -13,8 +13,8 @@ $a = [ 'where', ['service','"users/users"'],
 $b = [ 'a','b','c' ]
 $c = 'foo'
 $d = { 'foo' => 'bar' }
-notify{sexpr($d):}
-notify{sexpr($c):}
-notify{sexpr($b):}
-notify{sexpr($a):}
+puts(sexpr($d))
+puts(sexpr($c))
+puts(sexpr($b))
+puts(sexpr($a))
 
