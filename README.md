@@ -218,6 +218,9 @@ This is the base class. Most parameters will use OS specific values unless overr
 * `config_include_dir` string containing the path to the configuration directory which should be included. Defaults to OS specific value (see `params.pp`)
 * `init_config_file` string containing the path to the init system's configuration for riemann. Defaults to OS specific value (see `params.pp`)
 * `reload_command` string containing the command to run for reloading the riemann daemon. Defaults to OS specific value (see `params.pp`)
+* `manage_init_defaults` boolean controlling wether `init_config_file` should be managed. Defaults to `false`
+* `init_config_file` string containing the path to the init script's configuration file. Defaults to OS specific value (see `params.pp`)
+* `init_config_hash` hash containing key/values controlling the contents of `init_config_file`
 
 ### Class riemann::hiera
 

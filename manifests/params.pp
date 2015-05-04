@@ -40,6 +40,7 @@ class riemann::params {
     }
   }
   $config_include_dir = 'conf.d'
+  $init_config_hash = {}
   $log_file = '/var/log/riemann/riemann.log'
 }
 

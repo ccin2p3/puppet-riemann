@@ -1,7 +1,7 @@
 #
 class riemann::logging (
   $options = {
-    'file' => "\"${riemann::params::log_file}\""
+    'file' => "\"${::riemann::log_file}\""
   }
 ) {
   include riemann

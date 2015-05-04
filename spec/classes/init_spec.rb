@@ -19,6 +19,20 @@ describe 'riemann' do
           it { should contain_class('riemann::service').that_subscribes_to('riemann::config') }
         end
       end
+      describe "with init_defaults" do
+        let(:facts) do
+          osfixtures[:facts]
+        end
+        let(:params) {
+          { :manage_init_defaults => true }.merge(osfixtures[:params])
+        }
+        describe "on #{osname}" do
+          let :init_config_file do
+            osfixtures[:params][:init_config_file]
+          end
+          it { should contain_file(init_config_file) }
+        end
+      end
     end
   end
 

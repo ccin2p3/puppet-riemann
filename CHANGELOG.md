@@ -1,3 +1,4 @@
-YYYY-MM-DD Release 0.1.0
-- something you did
-- something else you did
+# 2015-05-04 Release 0.5.0
+
+* new feature: implement management of sysv init file config
+

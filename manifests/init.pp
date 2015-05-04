@@ -17,7 +17,10 @@ class riemann (
   $service_name = $riemann::params::service_name,
   $config_dir = $riemann::params::config_dir,
   $config_include_dir = $riemann::params::config_include_dir,
+  $manage_init_defaults = false,
+  $init_config_hash = $riemann::params::init_config_hash,
   $init_config_file = $riemann::params::init_config_file,
+  $log_file = $riemann::params::log_file,
   $reload_command = $riemann::params::reload_command,
   $debug = false
 ) inherits riemann::params {
