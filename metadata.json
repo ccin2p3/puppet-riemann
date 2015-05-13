@@ -6,6 +6,14 @@
   "license": "CeCILL 2.1",
   "summary": "Manage the riemann streams processor and its dashboard",
   "project_page": "https://github.com/ccin2p3/puppet-riemann",
+	"operatingsystem_support": [
+		{
+			"operatingsystem": "RedHat"
+		},
+		{
+			"operatingsystem": "Debian"
+		}
+	],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",

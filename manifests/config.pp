@@ -24,8 +24,8 @@ class riemann::config {
     ensure => directory
   } ->
   concat { 'riemann_config':
-    ensure  => present,
-    path    => "${config_dir}/riemann.config",
+    ensure => present,
+    path   => "${config_dir}/riemann.config",
   }
   riemann::config::fragment { 'header':
     content => template('riemann/riemann.config-header.erb'),
@@ -40,7 +40,7 @@ class riemann::config {
     file {$::riemann::init_config_file:
       ensure  => present,
       content => template('riemann/init_config_file.erb'),
-      notify => Service[$::riemann::service_name]
+      notify  => Service[$::riemann::service_name]
     }
   }
 }

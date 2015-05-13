@@ -228,12 +228,12 @@ This class is responsible for automatically creating resources for the module's 
 
 #### Parameters
 
-* `hiera_prefix` string containing variable prefix in hiera. Defaults to empty string.
+* `prefix` string containing variable prefix in hiera. Defaults to empty string.
 
 #### Example
 
 ```YAML
-riemann::hiera::hiera_prefix: mysite_
+riemann::hiera::prefix: mysite_
 mysite_riemann::stream:
   foo:
     content: |-
