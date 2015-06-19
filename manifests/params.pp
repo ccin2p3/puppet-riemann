@@ -28,7 +28,7 @@ class riemann::params {
           $reload_command = "/sbin/service ${service_name} reload"
         }
         '7': {
-          $reload_command = "/usr/bin/systemctl ${service_name} reload"
+          $reload_command = 'kill -HUP $(</var/run/riemann.pid)'
         }
         default: {
           fail("operatingsystemmajrelease `${::operatingsystemmajrelease}` not supported")
