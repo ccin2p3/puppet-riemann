@@ -22,10 +22,12 @@ class riemann (
   $init_config_file = $riemann::params::init_config_file,
   $log_file = $riemann::params::log_file,
   $reload_command = $riemann::params::reload_command,
+  $pubsub_var = '::environment',
   $debug = false
 ) inherits riemann::params {
 
   # validate parameters here
+  validate_re($pubsub_var, '^::','please specify only absolute top scope variable names')
 
   class { 'riemann::install': } ->
   class { 'riemann::config': } ~>
