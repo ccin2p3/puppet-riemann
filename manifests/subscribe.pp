@@ -29,7 +29,7 @@ define riemann::subscribe (
   },
   $stream = $title,
   $streams = 'default',
-  $puppet_environment = $environment
+  $pubsub_var = $::riemann::pubsub_var
 ) {
   $_sanitized_title = regsubst($title,' ','_')
   $async_queue_name = "${::hostname}-${_sanitized_title}"
@@ -39,14 +39,14 @@ define riemann::subscribe (
     content            => template('riemann/subscribe-let.erb'),
     section            => "let streams ${streams} ${stream}",
     subscriber         => $::clientcert,
-    puppet_environment => $puppet_environment
+    pubsub_var => getvar($pubsub_var)
   }
   # 'stream' statement
   @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${::clientcert}":
     content            => template('riemann/subscribe-stream.erb'),
     section            => "streams ${streams} ${stream}",
     subscriber         => $::clientcert,
-    puppet_environment => $puppet_environment
+    pubsub_var => getvar($pubsub_var)
   }
 }
 # vim: ft=puppet

@@ -150,6 +150,7 @@ riemann::stream {'tag':
 
 Riemann nodes can *subscribe* to others which *publish* certain streams.
 Special care has been given to limit subscriptions to the same puppet environment.
+This can however be overridden by using another variable than `::environment` to limit the scope of pubsubs.
 Here is an example that should be self explanatory. The published stream's content should be an array
 of two values which will be contatenated together with the subscriber's reference in between.
 
@@ -221,6 +222,7 @@ This is the base class. Most parameters will use OS specific values unless overr
 * `manage_init_defaults` boolean controlling wether `init_config_file` should be managed. Defaults to `false`
 * `init_config_file` string containing the path to the init script's configuration file. Defaults to OS specific value (see `params.pp`)
 * `init_config_hash` hash containing key/values controlling the contents of `init_config_file`
+* `pubsub_var` string containing the name of the puppet variable that will be used to limit the scope of this module's [publish/subscribe mechanism](#publishsubscribe)
 
 ### Class riemann::hiera
 
