@@ -39,6 +39,7 @@ class riemann::params {
       fail("osfamily `${::osfamily}` not supported")
     }
   }
+  $validate_cmd = '/usr/bin/java -cp /usr/lib/riemann/riemann.jar riemann.bin test %'
   $config_include_dir = 'conf.d'
   $init_config_hash = {}
   $log_file = '/var/log/riemann/riemann.log'

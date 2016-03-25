@@ -24,8 +24,9 @@ class riemann::config {
     ensure => directory
   } ->
   concat { 'riemann_config':
-    ensure => present,
-    path   => "${config_dir}/riemann.config",
+    ensure       => present,
+    path         => "${config_dir}/riemann.config",
+    validate_cmd => $riemann::validate_cmd,
   }
   riemann::config::fragment { 'header':
     content => template('riemann/riemann.config-header.erb'),

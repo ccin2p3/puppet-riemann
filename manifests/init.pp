@@ -22,6 +22,8 @@ class riemann (
   $init_config_file = $riemann::params::init_config_file,
   $log_file = $riemann::params::log_file,
   $reload_command = $riemann::params::reload_command,
+  $validate_cmd   = $riemann::params::validate_cmd,
+  $test_before_reload = false,
   $pubsub_var = '::environment',
   $debug = false
 ) inherits riemann::params {
