@@ -1,3 +1,7 @@
+# 2016-03-25 Release 0.7.0
+
+* test config before reloading
+
 # 2016-01-27 Release 0.6.0
 
 * make scope of pubsub configurable
