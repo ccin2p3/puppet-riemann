@@ -23,15 +23,22 @@ class riemann::params {
       $service_name = 'riemann'
       $config_dir = '/etc/riemann'
       $init_config_file = '/etc/sysconfig/riemann'
-      case $::operatingsystemmajrelease {
-        '6': {
+      case $::operatingsystem {
+        'Amazon': {
           $reload_command = "/sbin/service ${service_name} reload"
         }
-        '7': {
-          $reload_command = "/usr/bin/systemctl ${service_name} reload"
-        }
         default: {
-          fail("operatingsystemmajrelease `${::operatingsystemmajrelease}` not supported")
+          case $::operatingsystemmajrelease {
+            '6': {
+              $reload_command = "/sbin/service ${service_name} reload"
+            }
+            '7': {
+              $reload_command = "/usr/bin/systemctl ${service_name} reload"
+            }
+            default: {
+              fail("operatingsystemmajrelease `${::operatingsystemmajrelease}` not supported")
+            }
+          }
         }
       }
     }
