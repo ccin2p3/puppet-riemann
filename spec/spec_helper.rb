@@ -43,6 +43,21 @@ end
       :log_file => '/var/log/riemann/riemann.log'
     }
   },
+  'Amazon' => {
+    :facts => {
+      :operatingsystem     => 'Amazon',
+      :osfamily            => 'RedHat',
+      :operatingsystemmajrelease => 2014
+    },
+    :params => {
+      :package_name => 'riemann',
+      :service_name => 'riemann',
+      :config_dir => '/etc/riemann',
+      :init_config_file => '/etc/sysconfig/riemann',
+      :reload_command => '/usr/sbin/service riemann reload',
+      :log_file => '/var/log/riemann/riemann.log'
+    }
+  },
 }
 
 # add other combinations if you want to support a new OS e.g.
