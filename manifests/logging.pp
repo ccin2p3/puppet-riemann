@@ -8,6 +8,8 @@ class riemann::logging (
   if $riemann::debug {
     $debug_header = ";begin ${title}\n"
     $debug_footer = "\n;end ${title}"
+  } else {
+    $debug_header = ''
   }
   if $options {
     $options_str = join([':',join(join_keys_to_values($options,' '),' :')],'')
