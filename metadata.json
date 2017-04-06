@@ -1,6 +1,6 @@
 {
   "name": "ccin2p3-riemann",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "source": "https://github.com/ccin2p3/puppet-riemann",
   "author": "ccin2p3",
   "license": "CeCILL 2.1",
@@ -9,7 +9,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">=3.5.0"
+      "version_requirement": ">=3.5.0 < 5.0.0"
     }
   ],
 	"operatingsystem_support": [

@@ -1,3 +1,7 @@
+# 2016-04-06 Release 0.8.0
+
+* add support for puppet4
+
 # 2016-03-25 Release 0.7.0
 
 * test config before reloading
