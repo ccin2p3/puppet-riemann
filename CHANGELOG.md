@@ -1,4 +1,4 @@
-# 2016-04-06 Release 0.8.0
+# 2017-04-06 Release 0.8.0
 
 * add support for puppet4
 
