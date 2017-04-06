@@ -14,6 +14,9 @@ class riemann::config {
   if $debug {
     $debug_header = ";begin ${title}"
     $debug_footer = ";end ${title}\n"
+  } else {
+    $debug_header = ''
+    $debug_footer = ''
   }
   $config_dir = $::riemann::config_dir
   $config_include_dir = $::riemann::config_include_dir
