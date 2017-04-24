@@ -13,7 +13,7 @@ class riemann::service {
   service { $riemann::service_name:
     ensure     => running,
     enable     => true,
-    restart    => $riemann::reload_command,
+#    restart    => $riemann::reload_command,
     hasstatus  => true,
     hasrestart => true,
   }

@@ -1,8 +1,6 @@
 #
 class riemann::logging (
-  $options = {
-    'file' => "\"${::riemann::log_file}\""
-  }
+  $options = undef
 ) {
   include riemann
   if $riemann::debug {
@@ -11,6 +9,8 @@ class riemann::logging (
   }
   if $options {
     $options_str = join([':',join(join_keys_to_values($options,' '),' :')],'')
+  }else {
+    $options_str = ":file \"${::riemann::log_file}\""
   }
   riemann::config::fragment { $title:
     content => "${debug_header}(logging/init {${options_str}})${debug_footer}",

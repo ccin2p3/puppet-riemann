@@ -10,6 +10,11 @@
 # It should provide its package resources
 #
 class riemann::install {
+
+  package { daemonize:
+    ensure => present,
+  }
+
   package { $riemann::package_name:
     ensure => present,
   }

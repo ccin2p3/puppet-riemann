@@ -21,7 +21,9 @@ class riemann::config {
     ensure => directory
   } ->
   file { "${config_dir}/${config_include_dir}":
-    ensure => directory
+    ensure => directory,
+    source => "puppet:///modules/riemann/$config_include_dir",
+    recurse => true,
   } ->
   concat { 'riemann_config':
     ensure  => present,

@@ -39,7 +39,7 @@ class riemann::params {
       fail("osfamily `${::osfamily}` not supported")
     }
   }
-  $config_include_dir = 'conf.d'
+  $config_include_dir = 'custom'
   $init_config_hash = {}
   $log_file = '/var/log/riemann/riemann.log'
 }

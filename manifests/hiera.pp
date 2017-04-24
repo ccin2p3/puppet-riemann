@@ -12,11 +12,7 @@ class riemann::hiera (
 define riemann::hiera::create_resources {
   $rsname = "riemann::${title}"
   $varname = "${hiera_prefix}${rsname}"
-  create_resources (
-    $rsname,
-    hiera_hash(
-      $varname,
-      {}
-    )
-  )
+  $hash_resources = hiera_hash($varname, {})
+  validate_hash($hash_resources)
+  create_resources($rsname, $hash_resources)
 }
