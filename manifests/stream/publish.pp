@@ -40,10 +40,11 @@ define riemann::stream::publish (
     order      => "20-streams-${title}-26"
   }
   # collect stream functions from exported riemann::subscribe
-  Riemann::Config::Fragment <<| section == "let streams ${streams} ${stream}" and pubsub_var == getvar($::riemann::pubsub_var) and subscriber != $::clientcert |>> {
+  $_pubsub_var = getvar($::riemann::pubsub_var)
+  Riemann::Config::Fragment <<| section == "let streams ${streams} ${stream}" and pubsub_var == $_pubsub_var and subscriber != $::clientcert |>> {
     order   => "50-${streams}-13"
   }
-  Riemann::Config::Fragment <<| section == "streams ${streams} ${stream}" and pubsub_var == getvar($::riemann::pubsub_var) and subscriber != $::clientcert |>> {
+  Riemann::Config::Fragment <<| section == "streams ${streams} ${stream}" and pubsub_var == $_pubsub_var and subscriber != $::clientcert |>> {
     order   => "50-${streams}-25"
   }
   
