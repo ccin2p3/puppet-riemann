@@ -1,3 +1,7 @@
+# 2017-05-02 Release 0.8.1
+
+* fix puppet4 support for collecting resources
+
 # 2017-04-06 Release 0.8.0
 
 * add support for puppet4
