@@ -1,4 +1,7 @@
       <%=@async_queue_name%>
         (batch <%=@batch%>
-          (async-queue! :<%=@async_queue_name%> {<%=@async_queue_options_string%>}
-            (forward (tcp-client :host "<%=@clientcert%>"))))
+          (exception-stream
+            (throttle 1 10
+              (with {:host "<%=@clientcert%>" :service "<%=@async_queue_name%>" :state "warning"} reinject))
+            (async-queue! :<%=@async_queue_name%> {<%=@async_queue_options_string%>}
+              (forward (tcp-client :host "<%=@clientcert%>")))))
