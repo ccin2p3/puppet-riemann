@@ -1,3 +1,7 @@
+# 2017-05-23 Release 0.9.1
+
+* add exception stream to async subscriptions
+
 # 2017-05-02 Release 0.8.1
 
 * fix puppet4 support for collecting resources
