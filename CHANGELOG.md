@@ -1,4 +1,4 @@
-# 2017-05-23 Release 0.9.1
+# 2017-05-23 Release 0.9.2
 
 * add exception stream to async subscriptions
 
