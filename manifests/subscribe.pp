@@ -22,6 +22,7 @@
 # 
 define riemann::subscribe (
   $batch = '200 1',
+  $throttle = '1 10',
   $async_queue_options = {
     ':core-pool-size' => '4',
     ':max-pool-size'  => '128',

@@ -29,6 +29,10 @@ define riemann::streams (
     content => "      ${let_body}",
     order   => "${order}-10"
   }
+  riemann::config::fragment { "let ${title} clientcert alias":
+    content => "      our-host \"${::clientcert}\"",
+    order   => "${order}-11"
+  }
   # collect virtual and exported let items from riemann::let
   Riemann::Config::Fragment <| section == "let streams ${title}" and subscriber == 'local' |> {
     order   => "${order}-12"
