@@ -23,6 +23,7 @@
 define riemann::subscribe (
   $batch = '200 1',
   $throttle = '1 10',
+  $exception_stream = sprintf('(throttle 1 10 (with {:host our-host :service "%s-%s" :state "warning"} (adjust [:event #(count %%)] #(info %%))))', $::hostname, regsubst($title,' ','_')),
   $async_queue_options = {
     ':core-pool-size' => '4',
     ':max-pool-size'  => '128',

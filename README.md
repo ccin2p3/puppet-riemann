@@ -347,6 +347,7 @@ In terms of the node's configuration, this will have no effect locally. The stat
 * `streams` string describing streams corresponding to the publishing side
 * `batch` string describing [batching](http://riemann.io/api/riemann.streams.html#var-batch) properties. Defaults too `'200 1'` *i.e.* send batches of events once either 200 events have accumulated or 1 second has passed.
 * `async_queue_options` hash describing the options of the [async-queue](http://riemann.io/api/riemann.config.html#var-async-queue%21) which will be set up on the remote riemann instance. Defaults to `{':core-pool-size' => '4',':max-pool-size'=>'128',':queue-size'=>'1000'}`
+* `exception_stream` string containing the exception stream definition. When publish fails, this will describe what to do with exceptions.
 
 #### Example
 
