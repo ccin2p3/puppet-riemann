@@ -1,3 +1,7 @@
+# 2017-07-10 Release 0.10.0
+
+* Custom streams header/footer
+
 # 2017-06-13 Release 0.9.3
 
 * improve exception stream
