@@ -251,6 +251,8 @@ This type defines a `(streams … )` block which will contain stream functions. 
 
 * `let` array containing bindings. Defaults to `[]`
 * `order` string which will let you order different streams
+* `header` string containing the start of the s-expr. Defaults to `(streams`
+* `header` string containing the ending of the s-expr. Defaults to `)`
 
 #### Example
 
@@ -258,7 +260,8 @@ This type defines a `(streams … )` block which will contain stream functions. 
 riemann::streams {'mystream':}
 riemann::streams {'myotherstream':
   let => 'index (index)',
-  order => '00'
+  order => '00',
+  header => '(streams (where (not (expired? event)))',
 }
 ```
 

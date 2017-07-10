@@ -6,7 +6,9 @@
 #
 define riemann::streams (
   $let = [],
-  $order = "50-${title}"
+  $order = "50-${title}",
+  $header = '(streams',
+  $footer = ')',
 )
 {
   include riemann
@@ -42,7 +44,7 @@ define riemann::streams (
     order   => "${order}-15"
   }
   riemann::config::fragment { "streams ${title} header":
-    content => '(streams',
+    content => $header,
     order   => "${order}-20"
   }
   # collect stream functions from riemann::stream
@@ -50,7 +52,7 @@ define riemann::streams (
     order   => "${order}-25"
   }
   riemann::config::fragment { "streams ${title} footer":
-    content => ')',
+    content => $footer,
     order   => "${order}-28"
   }
   riemann::config::fragment { "let ${title} footer":
