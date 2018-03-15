@@ -1,0 +1,7 @@
+---
+riemann::use_hiera: true
+riemann::manage_init_defaults: false
+riemann::test_before_reload: false
+riemann::pubsub_var: '::environment'
+riemann::debug: false
+  

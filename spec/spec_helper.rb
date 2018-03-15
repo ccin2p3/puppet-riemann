@@ -18,6 +18,7 @@ end
       :operatingsystem      => 'Scientific',
       :osfamily             => 'RedHat',
       :operatingsystemmajrelease => 6,
+      :os => { :family => "RedHat", :release => {:major => 6}},
     },
     :params => {
       :package_name => 'riemann',
@@ -32,7 +33,8 @@ end
     :facts => {
       :operatingsystem     => 'Debian',
       :osfamily            => 'Debian',
-      :operatingsystemmajrelease => 8
+      :operatingsystemmajrelease => 8,
+      :os => { :family => "Debian", :release => {:major => 8}},
     },
     :params => {
       :package_name => 'riemann',

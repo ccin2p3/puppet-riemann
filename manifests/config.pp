@@ -40,7 +40,7 @@ class riemann::config {
     order   => '999'
   }
   if $riemann::manage_init_defaults {
-    $merged_init_config_hash = merge($::riemann::init_config_hash,$::riemann::params::init_config_hash)
+    $merged_init_config_hash = merge($::riemann::init_config_hash,$::riemann::init_config_hash)
     file {$::riemann::init_config_file:
       ensure  => present,
       content => template('riemann/init_config_file.erb'),

@@ -12,21 +12,21 @@
 # resources for riemann are present
 #
 class riemann (
-  $use_hiera = true,
-  $package_name = $riemann::params::package_name,
-  $service_name = $riemann::params::service_name,
-  $config_dir = $riemann::params::config_dir,
-  $config_include_dir = $riemann::params::config_include_dir,
-  $manage_init_defaults = false,
-  $init_config_hash = $riemann::params::init_config_hash,
-  $init_config_file = $riemann::params::init_config_file,
-  $log_file = $riemann::params::log_file,
-  $reload_command = $riemann::params::reload_command,
-  $validate_cmd   = $riemann::params::validate_cmd,
-  $test_before_reload = false,
-  $pubsub_var = '::environment',
-  $debug = false
-) inherits riemann::params {
+  $use_hiera,
+  $package_name,
+  $service_name,
+  $config_dir,
+  $config_include_dir,
+  $manage_init_defaults,
+  $init_config_hash,
+  $init_config_file,
+  $log_file,
+  $reload_command,
+  $validate_cmd,
+  $test_before_reload,
+  $pubsub_var,
+  $debug,
+) {
 
   # validate parameters here
   validate_re($pubsub_var, '^::','please specify only absolute top scope variable names')
@@ -35,7 +35,7 @@ class riemann (
   class { 'riemann::config': } ~>
   class { 'riemann::service': } ->
   Class['riemann']
-  
+
   if ($use_hiera) {
     include '::riemann::hiera'
   }

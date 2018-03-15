@@ -11,9 +11,10 @@
 # automatically forward to all hosts which
 # subscribe to it
 #
-class riemann::profile::proxy () inherits riemann::profile
+class riemann::profile::proxy ()
 {
   include ::riemann
+  include ::riemann::profile
   include ::riemann::publish
 }
 # vim: ft=puppet

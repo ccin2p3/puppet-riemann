@@ -13,10 +13,9 @@ describe 'riemann' do
           end
           it { should compile.with_all_deps }
           it { should contain_class('riemann') }
-          it { should contain_class('riemann::params') }
           it { should contain_class('riemann::config') }
-          it { should contain_class('riemann::install').that_comes_before('riemann::config') }
-          it { should contain_class('riemann::service').that_subscribes_to('riemann::config') }
+          it { should contain_class('riemann::install').that_comes_before('Class[riemann::config]') }
+          it { should contain_class('riemann::service').that_subscribes_to('Class[riemann::config]') }
         end
       end
       describe "with init_defaults" do
@@ -46,7 +45,7 @@ describe 'riemann' do
             :operatingsystem => 'AmigaOS',
           }
         end
-        it { expect { should contain_class('riemann::params') }.to raise_error(Puppet::Error, /osfamily `Commodore` not supported/) }
+        it { expect { should contain_class('riemann') }.to raise_error(Puppet::Error) }
       end
       describe 'on Scientific Linux 5' do
         let(:facts) do
@@ -56,7 +55,7 @@ describe 'riemann' do
             :operatingsystemmajrelease => 5
           }
         end
-        it { expect { should contain_class('riemann::params') }.to raise_error(Puppet::Error, /operatingsystemmajrelease `5` not supported/) }
+        it { expect { should contain_class('riemann') }.to raise_error(Puppet::Error) }
       end
     end
   end

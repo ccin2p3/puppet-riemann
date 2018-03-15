@@ -9,9 +9,10 @@
 # This profile is the base class for
 # profiles subscribing to riemann::profile::proxy
 #
-class riemann::profile::subscriber inherits riemann::profile
+class riemann::profile::subscriber
 {
   include ::riemann
+  include ::riemann::profile
   include ::riemann::subscription
 }
 # vim: ft=puppet

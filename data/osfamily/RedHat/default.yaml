@@ -1,0 +1,2 @@
+---
+riemann::init_config_file: /etc/sysconfig/riemann

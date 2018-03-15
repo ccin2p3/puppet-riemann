@@ -1,0 +1,2 @@
+---
+riemann::reload_command: 'kill -HUP $(</var/run/riemann.pid)'
