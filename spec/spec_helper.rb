@@ -29,6 +29,22 @@ end
       :log_file => '/var/log/riemann/riemann.log'
     }
   },
+  'EL7'     => {
+    :facts => {
+      :operatingsystem      => 'CentOS',
+      :osfamily             => 'RedHat',
+      :operatingsystemmajrelease => 7,
+      :os => { :family => "RedHat", :release => {:major => 7}},
+    },
+    :params => {
+      :package_name => 'riemann',
+      :service_name => 'riemann',
+      :config_dir => '/etc/riemann',
+      :init_config_file => '/etc/sysconfig/riemann',
+      :reload_command => 'kill -HUP $(</var/run/riemann.pid)',
+      :log_file => '/var/log/riemann/riemann.log'
+    }
+  },
   'Debian8' => {
     :facts => {
       :operatingsystem     => 'Debian',
