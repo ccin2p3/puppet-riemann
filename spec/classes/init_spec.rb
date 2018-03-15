@@ -5,8 +5,8 @@ os_fixtures = @os_fixtures
 describe 'riemann' do
   context 'supported operating systems' do
     os_fixtures.each do |osname, osfixtures|
-      describe "without any parameters" do
-        let(:params) {{ }}
+      describe 'without any parameters' do
+        let(:params) { {} }
         describe "on #{osname}" do
           let(:facts) do
             osfixtures[:facts]
@@ -18,7 +18,7 @@ describe 'riemann' do
           it { should contain_class('riemann::service').that_subscribes_to('Class[riemann::config]') }
         end
       end
-      describe "with init_defaults" do
+      describe 'with init_defaults' do
         let(:facts) do
           osfixtures[:facts]
         end
@@ -37,7 +37,7 @@ describe 'riemann' do
 
   context 'unsupported operating system' do
     describe 'without any parameters' do
-      let(:params) {{ }}
+      let(:params) { {} }
       describe 'on AmigaOS' do
         let(:facts) do
           {

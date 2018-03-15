@@ -22,11 +22,11 @@ class riemann::config {
   $config_include_dir = $::riemann::config_include_dir
   file { $config_dir:
     ensure => directory
-  } ->
-  file { "${config_dir}/${config_include_dir}":
+  }
+  -> file { "${config_dir}/${config_include_dir}":
     ensure => directory
-  } ->
-  concat { 'riemann_config':
+  }
+  -> concat { 'riemann_config':
     ensure       => present,
     path         => "${config_dir}/riemann.config",
     validate_cmd => $riemann::validate_cmd,

@@ -31,10 +31,10 @@ class riemann (
   # validate parameters here
   validate_re($pubsub_var, '^::','please specify only absolute top scope variable names')
 
-  class { 'riemann::install': } ->
-  class { 'riemann::config': } ~>
-  class { 'riemann::service': } ->
-  Class['riemann']
+  class { 'riemann::install': }
+  -> class { 'riemann::config': }
+  ~> class { 'riemann::service': }
+  -> Class['riemann']
 
   if ($use_hiera) {
     include '::riemann::hiera'

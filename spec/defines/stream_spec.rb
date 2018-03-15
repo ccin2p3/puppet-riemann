@@ -5,12 +5,12 @@ os_fixtures = @os_fixtures
 describe 'riemann::stream' do
   context 'supported operating systems' do
     os_fixtures.each do |osname, osfixtures|
-      describe "with title=mytitle" do
+      describe 'with title=mytitle' do
         let :title do
           'mytitle'
         end
-        describe "without any parameters" do
-          let(:params) {{ }}
+        describe 'without any parameters' do
+          let(:params) { {} }
           describe "on #{osname}" do
             let(:facts) do
               osfixtures[:facts]

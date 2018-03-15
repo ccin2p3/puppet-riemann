@@ -38,16 +38,16 @@ define riemann::subscribe (
   $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' ')),' ')
   # 'let' statement fragment
   @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
-    content            => template('riemann/subscribe-let.erb'),
-    section            => "let streams ${streams} ${stream}",
-    subscriber         => $::clientcert,
+    content    => template('riemann/subscribe-let.erb'),
+    section    => "let streams ${streams} ${stream}",
+    subscriber => $::clientcert,
     pubsub_var => getvar($pubsub_var)
   }
   # 'stream' statement
   @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${::clientcert}":
-    content            => template('riemann/subscribe-stream.erb'),
-    section            => "streams ${streams} ${stream}",
-    subscriber         => $::clientcert,
+    content    => template('riemann/subscribe-stream.erb'),
+    section    => "streams ${streams} ${stream}",
+    subscriber => $::clientcert,
     pubsub_var => getvar($pubsub_var)
   }
 }

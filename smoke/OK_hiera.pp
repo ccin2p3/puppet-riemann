@@ -22,6 +22,6 @@ riemann::stream { 'aggregate':
 
 # this is on the subscriber side:
 riemann::subscribe { 'riemann internals':
-  batch      => '100 1',
-  stream     => 'foo'
+  batch  => '100 1',
+  stream => 'foo'
 }

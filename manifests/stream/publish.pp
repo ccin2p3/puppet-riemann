@@ -47,6 +47,6 @@ define riemann::stream::publish (
   Riemann::Config::Fragment <<| section == "streams ${streams} ${stream}" and pubsub_var == $_pubsub_var and subscriber != $::clientcert |>> {
     order   => "50-${streams}-25"
   }
-  
+
 }
 # vim: ft=puppet
