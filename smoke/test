@@ -5,18 +5,25 @@
 should_succeed()
 {
 	$@
-	case $? in
-		0|2) :;;
-		*) exit $?;;
+	rc=$?
+	case $rc in
+		0|2) echo '*'
+			   echo '* Passed OK with RC' $rc;;
+		*) echo '*'
+			 echo '* Should have passed but Failed with RC' $rc
+			 exit $rc;;
 	esac
 }
 
 should_fail()
 {
 	$@
-	case $? in
-		0|2) exit 8;;
-		*) :;;
+	rc=$?
+	case $rc in
+		0|2) echo '* Should have Failed but passed with RC' $rc
+			   exit 8;;
+		*) echo '*'
+			 echo '* Failed OK with RC ' $rc;;
 	esac
 }
 
@@ -25,14 +32,10 @@ for manifest in $(find ./smoke -type f -name 'OK_*.pp'); do
 	echo '* Testing manifest `'$manifest'`'
 	echo '*'
  	should_succeed puppet apply --detailed-exitcodes $manifest
-	echo '*'
-	echo '* Passed OK *'
 done
 for manifest in $(find ./smoke -type f -name 'NOK_*.pp'); do
 	echo '*'
 	echo '* Testing manifest `'$manifest'`'
 	echo '*'
  	should_fail puppet apply --detailed-exitcodes $manifest
-	echo '*'
-	echo '* Failed OK *'
 done
