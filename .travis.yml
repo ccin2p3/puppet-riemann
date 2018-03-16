@@ -13,7 +13,6 @@ install:
   - sudo apt-get -qq install puppet openjdk-8-jre wget pdk
   - wget -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
   - sudo dpkg -i riemann.deb
-  - bundle install
 before_script:
   - mkdir -p ~/.puppetlabs/etc/code/modules
   - ln -s $PWD ~/.puppetlabs/etc/code/modules/riemann
