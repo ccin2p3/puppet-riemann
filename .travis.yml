@@ -16,7 +16,7 @@ before_script:
   - bundle exec puppet module build
   - bundle exec puppet module install pkg/*.tar.gz
 rvm:
-  - 2.1.0
+  - 2.1.9
   - 2.2.0
   - 2.3.0
   - 2.4.0
