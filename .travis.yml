@@ -14,6 +14,7 @@ install:
   - sudo dpkg -i riemann.deb
 before_script:
   - bundle install
+  - bundle exec puppet --version
   - bundle exec puppet module build
   - bundle exec puppet module install pkg/*.tar.gz
 rvm:
