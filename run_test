@@ -1,0 +1,18 @@
+#!/bin/sh
+
+RV=$(ruby --version)
+
+set_puppet_version()
+{
+	V=${1:-4.9.1}
+	echo -n "Running tests using ${RV} and puppet "
+	export PUPPET_GEM_VERSION="~> ${V}"
+	bundle update puppet >/dev/null
+	bundle exec puppet --version
+}
+
+for version in $GITLAB_CI_PUPPET_VERSIONS; do
+	set_puppet_version $version
+	pdk test unit
+done
+

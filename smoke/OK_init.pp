@@ -11,5 +11,6 @@
 #
 
 class { 'riemann':
-  config_dir => '/tmp/riemann'
+  config_dir => '/tmp/riemann',
+  reload_command => '/bin/true',
 }

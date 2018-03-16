@@ -24,19 +24,19 @@ end
       package_name: 'riemann',
       service_name: 'riemann',
       config_dir: '/etc/riemann',
-      init_config_fil: '/etc/sysconfig/riemann',
+      init_config_file: '/etc/sysconfig/riemann',
       reload_command: '/sbin/service riemann reload',
       log_file: '/var/log/riemann/riemann.log'
     }
   },
   'EL7' => {
-    facts => {
+    facts: {
       operatingsystem: 'CentOS',
       osfamily: 'RedHat',
       operatingsystemmajrelease: 7,
       os: { family: 'RedHat', release: { major: 7 } },
     },
-    params => {
+    params: {
       package_name: 'riemann',
       service_name: 'riemann',
       config_dir: '/etc/riemann',

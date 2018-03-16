@@ -1,10 +1,9 @@
 ---
 riemann::package_name: riemann
 riemann::service_name: riemann
-riemann::validate_cmd: '/usr/bin/java -cp /usr/lib/riemann/riemann.jar riemann.bin test %'
 riemann::config_include_dir: conf.d
 riemann::init_config_hash: {}
-riemann::log_file: &log_file /var/log/riemann/riemann.log
+riemann::log_file: &log_file '"/var/log/riemann/riemann.log"'
 riemann::logging::options:
   file: *log_file
 riemann::config_dir: /etc/riemann

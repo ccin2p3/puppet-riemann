@@ -1,0 +1,34 @@
+---
+stages:
+  - debian-ruby_2.4.1
+  - debian-ruby_2.1.9
+
+before_script:
+  - rm Gemfile.lock || true
+  - gem update --no-ri --no-rdoc --system
+  - gem update --no-ri --no-rdoc bundler
+  - gem --version
+  - bundle -v
+  - bundle install --without system_tests
+  - bundle exec puppet module build
+  - bundle exec puppet module install pkg/*.tar.gz
+  - gem install --no-ri --no-rdoc pdk
+  - wget -nv -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
+  - dpkg -i riemann.deb
+
+ruby_2.4.1:
+  stage: debian-ruby_2.4.1
+  image: ruby:2.4.1
+  variables:
+    GITLAB_CI_PUPPET_VERSIONS: "4.9.1 4.10.4 5.0.1 5.3.5 5.4.0"
+  script:
+    - ./run_test
+
+ruby_2.1.9:
+  stage: debian-ruby_2.1.9
+  image: ruby:2.1.9
+  variables:
+    GITLAB_CI_PUPPET_VERSIONS: "4.9.1 4.10.4 5.0.1 5.3.5 5.4.0"
+  script:
+    - ./run_test
+

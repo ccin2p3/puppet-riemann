@@ -1,6 +1,7 @@
 #
 class {'riemann':
-  config_dir => '/tmp/riemann'
+  config_dir => '/tmp/riemann',
+  reload_command => '/bin/true',
 }
 
 riemann::listen { ['udp','tcp','ws', 'sse', 'graphite']: }
