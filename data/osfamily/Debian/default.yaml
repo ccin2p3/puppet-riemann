@@ -1,3 +1,4 @@
 ---
 riemann::init_config_file: /etc/default/riemann
+riemann::validate_cmd: '/usr/bin/java -cp /usr/share/riemann/riemann.jar riemann.bin test %'
 riemann::reload_command: "/usr/sbin/service riemann reload"

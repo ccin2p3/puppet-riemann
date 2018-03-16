@@ -1,2 +1,3 @@
 ---
 riemann::init_config_file: /etc/sysconfig/riemann
+riemann::validate_cmd: '/usr/bin/java -cp /usr/lib/riemann/riemann.jar riemann.bin test %'
