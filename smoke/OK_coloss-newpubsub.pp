@@ -1,5 +1,6 @@
 class {'riemann':
   config_dir => '/tmp/riemann',
+  reload_command => '/bin/true',
 }
 riemann::config::fragment { 'index':
   content                => ['def', 'indexer',
