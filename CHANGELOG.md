@@ -1,3 +1,8 @@
+# 2018-03-16 Release 0.11.0
+
+* drop support for puppet3
+* use module data
+
 # 2017-07-10 Release 0.10.0
 
 * Custom streams header/footer
