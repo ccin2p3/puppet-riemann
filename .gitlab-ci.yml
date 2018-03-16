@@ -20,7 +20,7 @@ ruby_2.4.1:
   stage: debian-ruby_2.4.1
   image: ruby:2.4.1
   variables:
-    PUPPET_VERSIONS: "4.9.1 4.10.4 5.0.1 5.3.5 5.4.0"
+    GITLAB_CI_PUPPET_VERSIONS: "4.9.1 4.10.4 5.0.1 5.3.5 5.4.0"
   script:
     - ./run_test.sh
 
