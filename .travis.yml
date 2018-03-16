@@ -17,9 +17,9 @@ before_script:
   - bundle exec puppet module install pkg/*.tar.gz
 rvm:
   - 2.1.9
-  - 2.2.0
-  - 2.3.0
-  - 2.4.0
+  - 2.2.7
+  - 2.3.4
+  - 2.4.1
 script:
   - pdk test unit
   - ./smoke/test
