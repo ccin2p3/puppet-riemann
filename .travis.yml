@@ -4,20 +4,15 @@ sudo: true
 dist: trusty
 bundler_args: --without development
 before_install:
-  - rm Gemfile.lock || true
-  - wget https://apt.puppetlabs.com/puppet5-release-trusty.deb
-  - sudo dpkg -i puppet5-release-trusty.deb
   - sudo apt-get update -qq
   - sudo gem install bundler
 install:
-  - sudo apt-get -qq install puppet openjdk-8-jre wget pdk
+  - sudo apt-get -qq install openjdk-8-jre wget pdk
   - wget -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
   - sudo dpkg -i riemann.deb
 before_script:
-  - mkdir -p ~/.puppetlabs/etc/code/modules
-  - ln -s $PWD ~/.puppetlabs/etc/code/modules/riemann
-  - puppet module install puppetlabs-stdlib
-  - puppet module install puppetlabs-concat
+  - bundle exec puppet module build
+  - bundle exec puppet module install pkg/*.tar.gz
 rvm:
   - 2.1.0
   - 2.2.0
