@@ -24,7 +24,7 @@ rvm:
   - 2.3.0
   - 2.4.0
 script:
-  - pdk unit test
+  - pdk test unit
   - ./smoke/test
 env:
   - PUPPET_VERSION="~> 4.1.0"
