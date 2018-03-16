@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set_puppet_version()
+{
+	V=${1:-4.9.1}
+	export PUPPET_GEM_VERSION="~> ${V}"
+	bundle update puppet
+}
+
+for version in $GITLAB_CI_PUPPET_VERSIONS; do
+	set_puppet_version $version
+	bundle exec pdk test unit
+done
+
