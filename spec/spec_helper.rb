@@ -5,7 +5,7 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 
 RSpec.configure do |c|
   c.default_facts = {
-    concat_basedir: '/DIR',
+    concat_basedir: '/DIR'
   }
 end
 
@@ -18,7 +18,7 @@ end
       operatingsystem: 'Scientific',
       osfamily: 'RedHat',
       operatingsystemmajrelease: 6,
-      os: { family: 'RedHat', release: { major: 6 } },
+      os: { family: 'RedHat', release: { major: 6 } }
     },
     params: {
       package_name: 'riemann',
@@ -34,7 +34,7 @@ end
       operatingsystem: 'CentOS',
       osfamily: 'RedHat',
       operatingsystemmajrelease: 7,
-      os: { family: 'RedHat', release: { major: 7 } },
+      os: { family: 'RedHat', release: { major: 7 } }
     },
     params: {
       package_name: 'riemann',
@@ -50,7 +50,7 @@ end
       operatingsystem: 'Debian',
       osfamily: 'Debian',
       operatingsystemmajrelease: 8,
-      os: { family: 'Debian', release: { major: 8 } },
+      os: { family: 'Debian', release: { major: 8 } }
     },
     params: {
       package_name: 'riemann',
@@ -60,7 +60,7 @@ end
       reload_command: '/usr/sbin/service riemann reload',
       log_file: '/var/log/riemann/riemann.log'
     }
-  },
+  }
 }
 
 # add other combinations if you want to support a new OS e.g.
@@ -74,6 +74,6 @@ end
 # If you want to fetch all values from hiera
 #  e.g. because you're testing code that uses explicit hiera lookups
 #
-#RSpec.configure do |c|
+# RSpec.configure do |c|
 #  c.hiera_config = 'spec/fixtures/hiera/hiera.yaml'
-#end
+# end

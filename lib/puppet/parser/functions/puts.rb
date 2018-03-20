@@ -4,4 +4,3 @@ module Puppet::Parser::Functions
     puts args
   end
 end
-

@@ -22,9 +22,9 @@ describe 'riemann' do
         let(:facts) do
           osfixtures[:facts]
         end
-        let(:params) {
-          { :manage_init_defaults => true }.merge(osfixtures[:params])
-        }
+        let(:params) do
+          { manage_init_defaults: true }.merge(osfixtures[:params])
+        end
         describe "on #{osname}" do
           let :init_config_file do
             osfixtures[:params][:init_config_file]
@@ -41,8 +41,8 @@ describe 'riemann' do
       describe 'on AmigaOS' do
         let(:facts) do
           {
-            :osfamily        => 'Commodore',
-            :operatingsystem => 'AmigaOS',
+            osfamily: 'Commodore',
+            operatingsystem: 'AmigaOS'
           }
         end
         it { expect { should contain_class('riemann') }.to raise_error(Puppet::Error) }
@@ -50,9 +50,9 @@ describe 'riemann' do
       describe 'on Scientific Linux 5' do
         let(:facts) do
           {
-            :osfamily => 'RedHat',
-            :operatingsystem => 'Scientific',
-            :operatingsystemmajrelease => 5
+            osfamily: 'RedHat',
+            operatingsystem: 'Scientific',
+            operatingsystemmajrelease: 5
           }
         end
         it { expect { should contain_class('riemann') }.to raise_error(Puppet::Error) }

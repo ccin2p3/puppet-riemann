@@ -3,7 +3,7 @@
 #
 
 module Puppet::Parser::Functions
-  newfunction(:clj_map, :type => :rvalue, :doc => <<-EOS
+  newfunction(:clj_map, type: :rvalue, doc: <<-EOS
 This converts a hash into a string containing a serialized clojure map.
 
 Example:
@@ -18,25 +18,23 @@ Will yield the string:
 
 Arguments: $hash
     EOS
-  ) do |arguments|
+             ) do |arguments|
 
-    if arguments.empty?
-      return []
-    end
+    return [] if arguments.empty?
 
     if arguments.length == 1
-      if ! arguments[0].kind_of?(Hash)
-        raise(Puppet::Error, "clj_map(): argument must be a hash")
+      unless arguments[0].is_a?(Hash)
+        raise(Puppet::Error, 'clj_map(): argument must be a hash')
       end
     else
-      raise(Puppet::Error, "clj_map(): only one argument accepted")
+      raise(Puppet::Error, 'clj_map(): only one argument accepted')
     end
-    
+
     inner = []
-    arguments[0].sort.each do |k,v|
+    arguments[0].sort.each do |k, v|
       inner.push(":#{k} #{v}")
     end
-    result = '{' + inner.join(" ") + ')'
+    result = '{' + inner.join(' ') + ')'
     return result
   end
 end

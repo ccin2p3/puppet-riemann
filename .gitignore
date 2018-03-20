@@ -1,7 +1,10 @@
 .*.sw?
-pkg
+/pkg/
+/obsolete/
+TODO
 spec/fixtures
 .rspec_system
 .vagrant
 /.bundle/
 /Gemfile.lock
+/vendor/
