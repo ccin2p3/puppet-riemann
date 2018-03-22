@@ -1,3 +1,8 @@
+# 2018-03-22 Release 1.0.0
+
+* drop support for puppet <4.9.0
+* use module data
+
 # 2018-03-16 Release 0.11.0
 
 * drop support for puppet3
