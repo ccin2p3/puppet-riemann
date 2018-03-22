@@ -23,7 +23,10 @@ rvm:
   - 2.4.1
 script:
   - pdk test unit
-  - ./smoke/test
+  - bundle exec rake lint
+  - bundle exec rake validate
+  - bundle exec rake spec
+  - bundle exec ./smoke/test
 env:
   - PUPPET_GEM_VERSION="~> 4.9.0"
   - PUPPET_GEM_VERSION="~> 4.9.4"
