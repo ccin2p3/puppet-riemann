@@ -26,7 +26,7 @@ script:
   - bundle exec rake lint
   - bundle exec rake validate
   - bundle exec rake spec
-  - bundle exec ./smoke/test
+  - bundle exec ./smoke/test -d
 env:
   - PUPPET_GEM_VERSION="~> 4.9.0"
   - PUPPET_GEM_VERSION="~> 4.9.4"

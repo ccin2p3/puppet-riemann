@@ -1,13 +1,16 @@
 ---
 stages:
+  - openjdk-8
   - debian-ruby_2.4.1
   - debian-ruby_2.1.9
 
 before_script:
-  - rm Gemfile.lock || true
-  - gem update --no-ri --no-rdoc --system
-  - gem update --no-ri --no-rdoc bundler
+  - apt-get update
+  - apt-get install ruby wget ruby-dev libffi-dev gcc make -y
   - gem --version
+  - gem update --system 2.7.4
+  - gem --version
+  - gem install --no-ri --no-rdoc bundler
   - bundle -v
   - bundle install --without system_tests
   - bundle exec puppet module build
@@ -15,6 +18,17 @@ before_script:
   - gem install --no-ri --no-rdoc pdk
   - wget -nv -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
   - dpkg -i riemann.deb
+
+openjdk-8:
+  stage: openjdk-8
+  image: openjdk:8-jre-stretch
+  variables:
+    GITLAB_CI_PUPPET_VERSIONS: "4.9.1 4.10.4 5.0.1 5.3.5 5.4.0 5.5.0"
+  script:
+    - bundle exec rake lint
+    - bundle exec rake validate
+    - bundle exec rake spec
+    - ./run_test
 
 ruby_2.4.1:
   stage: debian-ruby_2.4.1

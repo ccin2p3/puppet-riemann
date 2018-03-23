@@ -2,6 +2,20 @@
 
 [ ! -d "./smoke" ] && { echo "No tests to run"; exit 0; }
 
+OPTS="--detailed-exitcodes"
+DEBUG=0
+while [ -n "${@:-}" ]; do
+	case $1 in
+		-d) DEBUG=1
+			  shift;;
+		*) ;;
+	esac
+done
+
+if [ $DEBUG -eq 0 ]; then
+	OPTS="${OPTS} --logdest /dev/null"
+fi
+
 should_succeed()
 {
 	$@
@@ -24,11 +38,22 @@ should_fail()
 	esac
 }
 
+might_fail()
+{
+	$@
+	rc=$?
+	echo '* Ran with RC' $rc
+}
+
 for manifest in $(find ./smoke -type f -name 'OK_*.pp'); do
 	echo -n '* Testing manifest `'$manifest'`'
- 	should_succeed bundle exec puppet apply --logdest /dev/null --detailed-exitcodes $manifest
+ 	should_succeed bundle exec puppet apply $OPTS $manifest
 done
 for manifest in $(find ./smoke -type f -name 'NOK_*.pp'); do
 	echo -n '* Testing manifest `'$manifest'`'
- 	should_fail bundle exec puppet apply --logdest /dev/null --detailed-exitcodes $manifest
+ 	should_fail bundle exec puppet apply $OPTS $manifest
+done
+for manifest in $(find ./smoke -type f -name 'MOK_*.pp'); do
+	echo -n '* Testing manifest `'$manifest'`'
+ 	might_fail bundle exec puppet apply $OPTS $manifest
 done
