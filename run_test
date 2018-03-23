@@ -13,7 +13,9 @@ set_puppet_version()
 
 for version in $GITLAB_CI_PUPPET_VERSIONS; do
 	set_puppet_version $version
-	pdk test unit
+	bundle exec rake lint
+	bundle exec rake validate
+	bundle exec rake spec
 	./smoke/test
 done
 
