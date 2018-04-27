@@ -1,6 +1,6 @@
       <%=@async_queue_name%>
-        (batch <%=@batch%>
-          (exception-stream
-            <%=@exception_stream%>
-            (async-queue! :<%=@async_queue_name%> {<%=@async_queue_options_string%>}
+        (exception-stream
+          <%=@exception_stream%>
+          (async-queue! :<%=@async_queue_name%> {<%=@async_queue_options_string%>}
+            (batch <%=@batch%>
               (forward (tcp-client :host "<%=@clientcert%>")))))
