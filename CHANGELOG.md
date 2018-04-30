@@ -1,3 +1,7 @@
+# 2018-04-30 Release 1.0.1
+
+* fix publish/subscribe
+
 # 2018-03-22 Release 1.0.0
 
 * drop support for puppet <4.9.0
