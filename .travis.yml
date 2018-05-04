@@ -22,7 +22,7 @@ rvm:
   - 2.3.4
   - 2.4.1
 script:
-  - pdk test unit
+  - pdk test unit --puppet-version=$(bundle show puppet | sed -e 's/^.*-//')
   - bundle exec rake lint
   - bundle exec rake validate
   - bundle exec rake spec
