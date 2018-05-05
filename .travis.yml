@@ -29,12 +29,8 @@ script:
   - bundle exec ./smoke/test -d
 env:
   - PUPPET_GEM_VERSION="~> 4.9.0"
-  - PUPPET_GEM_VERSION="~> 4.9.4"
   - PUPPET_GEM_VERSION="~> 4.10.0"
-  - PUPPET_GEM_VERSION="~> 4.10.9"
-  - PUPPET_GEM_VERSION="~> 4.10.10"
   - PUPPET_GEM_VERSION="~> 5.0.0"
-  - PUPPET_GEM_VERSION="~> 5.0.1"
   - PUPPET_GEM_VERSION="~> 5.1.0"
   - PUPPET_GEM_VERSION="~> 5.3.5"
   - PUPPET_GEM_VERSION="~> 5.4.0"
