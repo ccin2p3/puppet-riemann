@@ -22,23 +22,20 @@ rvm:
   - 2.3.4
   - 2.4.1
 script:
-  - pdk test unit
+  - pdk test unit --puppet-version=$(bundle show puppet | sed -e 's/^.*-//')
   - bundle exec rake lint
   - bundle exec rake validate
   - bundle exec rake spec
   - bundle exec ./smoke/test -d
 env:
   - PUPPET_GEM_VERSION="~> 4.9.0"
-  - PUPPET_GEM_VERSION="~> 4.9.4"
   - PUPPET_GEM_VERSION="~> 4.10.0"
-  - PUPPET_GEM_VERSION="~> 4.10.9"
-  - PUPPET_GEM_VERSION="~> 4.10.10"
   - PUPPET_GEM_VERSION="~> 5.0.0"
-  - PUPPET_GEM_VERSION="~> 5.0.1"
   - PUPPET_GEM_VERSION="~> 5.1.0"
   - PUPPET_GEM_VERSION="~> 5.3.5"
   - PUPPET_GEM_VERSION="~> 5.4.0"
-#matrix:
-#  exclude:
-#  - rvm: 1.9.3
-#    env: PUPPET_GEM_VERSION="~> 3.5.0"
+  - PUPPET_GEM_VERSION="~> 5.5.0"
+matrix:
+  exclude:
+  - rvm: 2.1.9
+    env: PUPPET_GEM_VERSION="~> 5.5.0"
