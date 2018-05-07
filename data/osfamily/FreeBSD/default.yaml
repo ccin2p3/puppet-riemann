@@ -1,0 +1,5 @@
+---
+riemann::init_config_file: ~
+riemann::reload_command: /usr/sbin/service riemann reload
+riemann::config_dir: /usr/local/etc/riemann
+riemann::validate_cmd: '/usr/local/bin/java -cp /usr/local/share/java/classes/riemann.jar riemann.bin test %'
