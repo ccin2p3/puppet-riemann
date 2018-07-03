@@ -9,7 +9,6 @@ before_install:
   - sudo apt-get update -qq
 install:
   - sudo apt-get -qq install openjdk-8-jre wget
-  - gem install pdk
   - wget -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
   - sudo dpkg -i riemann.deb
 before_script:
@@ -22,7 +21,6 @@ rvm:
   - 2.3.4
   - 2.4.1
 script:
-  - pdk test unit --puppet-version=$(bundle show puppet | sed -e 's/^.*-//')
   - bundle exec rake lint
   - bundle exec rake validate
   - bundle exec rake spec
