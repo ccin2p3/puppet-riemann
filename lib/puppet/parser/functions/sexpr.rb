@@ -2,39 +2,38 @@
 # sexpr.rb
 #
 
-def _serel(*args)
-  if args.length == 2
-    level = 0
-  elsif args.length == 3
-    level = args[2]
-  else
-    raise(Puppet::Error, '_serel(): one or two args only')
-  end
-  arg = args[0]
-  indent = args[1]
-  result = ''
-  sp = ' ' * level * 2 + '  ' * indent
-  case arg
-  when Array
-    inner = []
-    arg.each do |a|
-      inner.push(_serel(a, indent, level + 1))
-    end
-    result += "\n" if level > 0
-    result += "#{sp}(" + inner.join(' ') + ')'
-  when Hash
-    inner = []
-    arg.sort.each do |k, v|
-      inner.push(":#{k} #{v}")
-    end
-    result += '{' + inner.join(' ') + '}'
-  else
-    result += arg.to_s
-  end
-  result
-end
-
 module Puppet::Parser::Functions
+  def self._serel(*args)
+    if args.length == 2
+      level = 0
+    elsif args.length == 3
+      level = args[2]
+    else
+      raise(Puppet::Error, '_serel(): one or two args only')
+    end
+    arg = args[0]
+    indent = args[1]
+    result = ''
+    sp = ' ' * level * 2 + '  ' * indent
+    case arg
+    when Array
+      inner = []
+      arg.each do |a|
+        inner.push(Puppet::Parser::Functions._serel(a, indent, level + 1))
+      end
+      result += "\n" if level > 0
+      result += "#{sp}(" + inner.join(' ') + ')'
+    when Hash
+      inner = []
+      arg.sort.each do |k, v|
+        inner.push(":#{k} #{v}")
+      end
+      result += '{' + inner.join(' ') + '}'
+    else
+      result += arg.to_s
+    end
+    result
+  end
   newfunction(:sexpr, type: :rvalue, doc: <<-EOS
 This converts a nested structure into a string containing an s-expression.
 It will serialize each element it encounters recursively:
@@ -84,7 +83,7 @@ Arguments: $object $indent_level
       raise(Puppet::Error, 'sexpr(): only one argument accepted')
     end
     return '  ' * indent + arguments[0] + "\n" if arguments[0].is_a?(String)
-    return _serel(arguments[0], indent) + "\n"
+    return Puppet::Parser::Functions._serel(arguments[0], indent) + "\n"
   end
 end
 
