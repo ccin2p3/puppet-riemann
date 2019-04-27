@@ -11,7 +11,7 @@
 # (service "users/users")
 #
 # Arguments: $array
-Puppet::Functions.create_function(:clj_vec) do
+Puppet::Functions.create_function(:'riemann::clj_vec') do
   def clj_vec(*arguments)
     return [] if arguments.empty?
 

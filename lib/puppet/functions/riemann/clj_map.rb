@@ -11,7 +11,7 @@
 # {:foo 9}
 #
 # Arguments: $hash
-Puppet::Functions.create_function(:clj_map) do
+Puppet::Functions.create_function(:'riemann::clj_map') do
   def clj_map(*arguments)
     return [] if arguments.empty?
 

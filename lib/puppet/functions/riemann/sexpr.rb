@@ -32,7 +32,7 @@
 #           (with {:host nil} index))))))
 #
 # Arguments: $object $indent_level
-Puppet::Functions.create_function(:sexpr) do
+Puppet::Functions.create_function(:'riemann::sexpr') do
   def _serel(arg, indent, level = 0)
     result = ''
     sp = ' ' * level * 2 + '  ' * indent

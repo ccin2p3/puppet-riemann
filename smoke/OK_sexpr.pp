@@ -13,8 +13,8 @@ $a = [ 'where', ['service','"users/users"'],
 $b = [ 'a','b','c' ]
 $c = 'foo'
 $d = { 'foo' => 'bar' }
-puts(sexpr($d))
-puts(sexpr($c))
-puts(sexpr($b))
-puts(sexpr($a))
+riemann::puts(riemann::sexpr($d))
+riemann::puts(riemann::sexpr($c))
+riemann::puts(riemann::sexpr($b))
+riemann::puts(riemann::sexpr($a))
 

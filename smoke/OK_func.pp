@@ -1,6 +1,6 @@
 $a = [ 1, 2, 3 ]
 $b = { 'z' => 'b', 'c' => 'd' }
-$r1=clj_vec($a)
-$r2=clj_map($b)
-puts($r1)
-puts($r2)
+$r1=riemann::clj_vec($a)
+$r2=riemann::clj_map($b)
+riemann::puts($r1)
+riemann::puts($r2)
