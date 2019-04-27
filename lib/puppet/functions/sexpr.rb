@@ -33,16 +33,7 @@
 #
 # Arguments: $object $indent_level
 Puppet::Functions.create_function(:sexpr) do
-  def _serel(*args)
-    if args.length == 2
-      level = 0
-    elsif args.length == 3
-      level = args[2]
-    else
-      raise(Puppet::Error, '_serel(): one or two args only')
-    end
-    arg = args[0]
-    indent = args[1]
+  def _serel(arg, indent, level = 0)
     result = ''
     sp = ' ' * level * 2 + '  ' * indent
     case arg
