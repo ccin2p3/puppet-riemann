@@ -15,16 +15,13 @@ Puppet::Functions.create_function(:'riemann::clj_vec') do
   def clj_vec(*arguments)
     return [] if arguments.empty?
 
-    if arguments.length == 1
-      unless arguments[0].is_a?(Array)
-        raise(Puppet::Error, 'clj_vec(): argument must be an array')
-      end
-    else
-      raise(Puppet::Error, 'clj_vec(): only one argument accepted')
+    raise(Puppet::Error, 'clj_vec(): only one argument accepted') unless arguments.length == 1
+    unless arguments[0].is_a?(Array)
+      raise(Puppet::Error, 'clj_vec(): argument must be an array')
     end
 
     result = '(' + arguments[0].join(' ') + ')'
-    return result
+    result
   end
 end
 

@@ -68,7 +68,7 @@ Puppet::Functions.create_function(:'riemann::sexpr') do
       raise(Puppet::Error, 'sexpr(): only one argument accepted')
     end
     return '  ' * indent + arguments[0] + "\n" if arguments[0].is_a?(String)
-    return _serel(arguments[0], indent) + "\n"
+    _serel(arguments[0], indent) + "\n"
   end
 end
 

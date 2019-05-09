@@ -3,7 +3,7 @@ require 'spec_helper_acceptance'
 describe 'riemann class' do
   context 'default parameters' do
     # Using puppet_apply as a helper
-    it 'should work idempotently with no errors' do
+    it 'works idempotently with no errors' do
       pp = <<-EOS
       class { 'riemann': }
       EOS
@@ -14,12 +14,12 @@ describe 'riemann class' do
     end
 
     describe package('riemann') do
-      it { should be_installed }
+      it { is_expected.to be_installed }
     end
 
     describe service('riemann') do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
   end
 end
