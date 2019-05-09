@@ -1,78 +1,64 @@
 ---
 stages:
+  - syntax
   - unit
+  - smoke
+
+cache:
+  paths:
+    - vendor/bundle
 variables:
   RIEMANN_VERSION: 0.3.0
+
 before_script:
+  - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
+
+syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.5.3-Puppet ~> 5:
+  stage: syntax
+  image: ruby:2.5.3
+  script:
+    - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
+
+smoke riemann puppet 5:
+  stage: smoke
+  image: ruby:2.5.3
+  variables:
+    PUPPET_GEM_VERSION: '~> 5'
+  script:
   - apt update
   - apt install openjdk-8-jre-headless -y
   - wget -nv -O riemann.deb https://github.com/riemann/riemann/releases/download/${RIEMANN_VERSION}/riemann_${RIEMANN_VERSION}_all.deb
   - dpkg -i riemann.deb
-  - gem --version
-  - gem install --no-ri --no-rdoc bundler
-  - bundle -v
-  - bundle install --without system_tests
+  - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
+  - bundle update puppet
+  - bundle exec puppet --version
+  - bundle exec pdk build
+  - bundle exec puppet module install pkg/*.tar.gz
+  - bundle exec ./smoke/test 
 
-.test-ruby: &test_ruby
+parallel_spec-Ruby 2.5.3-Puppet ~> 6:
   stage: unit
-  variables:
-    GITLAB_CI_PUPPET_VERSIONS: "4.10.4 4.10.10 5.0.1 5.3.5 5.4.0 5.5.0"
+  image: ruby:2.5.3
   script:
-    - bundle exec puppet module build
-    - bundle exec puppet module install pkg/*.tar.gz
-    - ./run_test
-
-test-ruby_2.4.1-puppet_4.10.4:
-  <<: *test_ruby
-  image: ruby:2.4.1-stretch
+    - bundle exec rake parallel_spec
   variables:
-    GITLAB_CI_PUPPET_VERSIONS: 4.10.4
+    PUPPET_GEM_VERSION: '~> 6'
 
-test-ruby_2.4.1-puppet_4.10.10:
-  <<: *test_ruby
-  image: ruby:2.4.1-stretch
+parallel_spec-Ruby 2.5.3-Puppet ~> 5:
+  stage: unit
+  image: ruby:2.5.3
+  script:
+    - bundle exec rake parallel_spec
   variables:
-    GITLAB_CI_PUPPET_VERSIONS: 4.10.10
+    PUPPET_GEM_VERSION: '~> 5'
 
-test-ruby_2.4.1-puppet_5.0.1:
-  <<: *test_ruby
-  image: ruby:2.4.1-stretch
+parallel_spec-Ruby 2.4.5-Puppet ~> 4:
+  stage: unit
+  image: ruby:2.4.5
+  script:
+    - bundle exec rake parallel_spec
   variables:
-    GITLAB_CI_PUPPET_VERSIONS: 5.0.1
+    PUPPET_GEM_VERSION: '~> 4'
 
-test-ruby_2.4.1-puppet_5.4.0:
-  <<: *test_ruby
-  image: ruby:2.4.1-stretch
-  variables:
-    GITLAB_CI_PUPPET_VERSIONS: 5.4.0
-
-test-ruby_2.4.1-puppet_5.5.0:
-  <<: *test_ruby
-  image: ruby:2.4.1-stretch
-  variables:
-    GITLAB_CI_PUPPET_VERSIONS: 5.5.0
-
-test-ruby_2.5:
-  <<: *test_ruby
-  image: ruby:2.5-stretch
-
-#.rvm:
-#  before_script:
-#    - apt-get update
-#    - apt-get install ruby wget ruby-dev libffi-dev gcc make -y
-#    - curl -sSL https://rvm.io/mpapis.asc | gpg --import -
-#    - curl -sSL https://get.rvm.io | bash -s stable
-#    - . /etc/profile.d/rvm.sh
-#    - rvm install $RUBY_VERSION
-#    - rvm use $RUBY_VERSION
-#    - gem --version
-#    - gem update --system 2.7.4
-#    - gem --version
-#    - gem install --no-ri --no-rdoc bundler
-#    - bundle -v
-#    - bundle install --without system_tests
-#    - bundle exec puppet module build
-#    - bundle exec puppet module install pkg/*.tar.gz
-#    - gem install --no-ri --no-rdoc pdk
-#    - wget -nv -O riemann.deb https://github.com/riemann/riemann/releases/download/0.3.0/riemann_0.3.0_all.deb
-#    - dpkg -i riemann.deb
