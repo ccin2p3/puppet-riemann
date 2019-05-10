@@ -12,7 +12,12 @@ set_puppet_version()
 }
 
 for version in $GITLAB_CI_PUPPET_VERSIONS; do
+	rm Gemfile.lock
+	gem install bundler
+  bundle install --without system_tests
 	set_puppet_version $version
+  bundle exec puppet module build
+  bundle exec puppet module install pkg/*.tar.gz
 	bundle exec rake lint
 	bundle exec rake validate
 	bundle exec rake spec

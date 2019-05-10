@@ -28,6 +28,7 @@ if File.exist?(default_module_facts_path) && File.readable?(default_module_facts
 end
 
 RSpec.configure do |c|
+  c.mock_with :rspec
   c.default_facts = default_facts
 end
 
@@ -40,7 +41,7 @@ end
       operatingsystem: 'Scientific',
       osfamily: 'RedHat',
       operatingsystemmajrelease: 6,
-      os: { family: 'RedHat', release: { major: 6 } }
+      os: { family: 'RedHat', release: { major: 6 } },
     },
     params: {
       package_name: 'riemann',
@@ -48,15 +49,15 @@ end
       config_dir: '/etc/riemann',
       init_config_file: '/etc/sysconfig/riemann',
       reload_command: '/sbin/service riemann reload',
-      log_file: '/var/log/riemann/riemann.log'
-    }
+      log_file: '/var/log/riemann/riemann.log',
+    },
   },
   'EL7' => {
     facts: {
       operatingsystem: 'CentOS',
       osfamily: 'RedHat',
       operatingsystemmajrelease: 7,
-      os: { family: 'RedHat', release: { major: 7 } }
+      os: { family: 'RedHat', release: { major: 7 } },
     },
     params: {
       package_name: 'riemann',
@@ -64,15 +65,15 @@ end
       config_dir: '/etc/riemann',
       init_config_file: '/etc/sysconfig/riemann',
       reload_command: 'kill -HUP $(</var/run/riemann.pid)',
-      log_file: '/var/log/riemann/riemann.log'
-    }
+      log_file: '/var/log/riemann/riemann.log',
+    },
   },
   'Debian8' => {
     facts: {
       operatingsystem: 'Debian',
       osfamily: 'Debian',
       operatingsystemmajrelease: 8,
-      os: { family: 'Debian', release: { major: 8 } }
+      os: { family: 'Debian', release: { major: 8 } },
     },
     params: {
       package_name: 'riemann',
@@ -80,9 +81,9 @@ end
       config_dir: '/etc/riemann',
       init_config_file: '/etc/default/riemann',
       reload_command: '/usr/sbin/service riemann reload',
-      log_file: '/var/log/riemann/riemann.log'
-    }
-  }
+      log_file: '/var/log/riemann/riemann.log',
+    },
+  },
 }
 
 # add other combinations if you want to support a new OS e.g.
