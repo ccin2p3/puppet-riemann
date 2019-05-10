@@ -1,25 +1,18 @@
+# This converts a hash into a string containing a serialized clojure map.
 #
-# clj_map.rb
+# Example:
 #
-
-module Puppet::Parser::Functions
-  newfunction(:clj_map, type: :rvalue, doc: <<-EOS
-This converts a hash into a string containing a serialized clojure map.
-
-Example:
-
-The following puppet structure:
-
-{'foo' => 9}
-
-Will yield the string:
-
-{:foo 9}
-
-Arguments: $hash
-    EOS
-             ) do |arguments|
-
+# The following puppet structure:
+#
+# {'foo' => 9}
+#
+# Will yield the string:
+#
+# {:foo 9}
+#
+# Arguments: $hash
+Puppet::Functions.create_function(:'riemann::clj_map') do
+  def clj_map(*arguments)
     return [] if arguments.empty?
 
     if arguments.length == 1

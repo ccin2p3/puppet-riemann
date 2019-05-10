@@ -18,7 +18,7 @@ define riemann::config::fragment (
 )
 {
   ::concat::fragment { "riemann::config ${title}":
-    content => sexpr($content),
+    content => riemann::sexpr($content),
     target  => 'riemann_config',
     order   => $order
   }

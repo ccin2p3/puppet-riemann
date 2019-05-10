@@ -1,25 +1,18 @@
+# This converts an array into a string containing a serialized clojure vector.
 #
-# clj_vec.rb
+# Example:
 #
-
-module Puppet::Parser::Functions
-  newfunction(:clj_vec, type: :rvalue, doc: <<-EOS
-This converts an array into a string containing a serialized clojure vector.
-
-Example:
-
-The following puppet structure:
-
-['service','"users/users"'],
-
-Will yield the string:
-
-(service "users/users")
-
-Arguments: $array
-    EOS
-             ) do |arguments|
-
+# The following puppet structure:
+#
+# ['service','"users/users"'],
+#
+# Will yield the string:
+#
+# (service "users/users")
+#
+# Arguments: $array
+Puppet::Functions.create_function(:'riemann::clj_vec') do
+  def clj_vec(*arguments)
     return [] if arguments.empty?
 
     if arguments.length == 1

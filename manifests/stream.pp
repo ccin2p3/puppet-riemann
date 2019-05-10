@@ -9,7 +9,7 @@ define riemann::stream (
     riemann::streams { $streams: }
   }
 
-  $sexpr = sexpr($content,1)
+  $sexpr = riemann::sexpr($content,1)
   @riemann::config::fragment { "stream ${title}":
     section    => "streams ${streams}",
     subscriber => 'local',
