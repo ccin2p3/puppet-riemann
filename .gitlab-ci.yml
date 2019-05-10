@@ -17,7 +17,7 @@ syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore c
   stage: syntax
   image: ruby:2.5.3
   script:
-    - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
+    - bundle exec rake syntax lint validate metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
   variables:
     PUPPET_GEM_VERSION: '~> 6'
 
@@ -42,7 +42,7 @@ parallel_spec-Ruby 2.5.3-Puppet ~> 6:
   stage: unit
   image: ruby:2.5.3
   script:
-    - bundle exec rake parallel_spec
+    - bundle exec rake spec
   variables:
     PUPPET_GEM_VERSION: '~> 6'
 
@@ -50,7 +50,7 @@ parallel_spec-Ruby 2.5.3-Puppet ~> 5:
   stage: unit
   image: ruby:2.5.3
   script:
-    - bundle exec rake parallel_spec
+    - bundle exec rake spec
   variables:
     PUPPET_GEM_VERSION: '~> 5'
 
@@ -58,7 +58,7 @@ parallel_spec-Ruby 2.4.5-Puppet ~> 4:
   stage: unit
   image: ruby:2.4.5
   script:
-    - bundle exec rake parallel_spec
+    - bundle exec rake spec
   variables:
     PUPPET_GEM_VERSION: '~> 4'
 
