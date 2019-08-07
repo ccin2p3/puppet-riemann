@@ -2,63 +2,40 @@
 stages:
   - syntax
   - unit
-  - smoke
 
 cache:
   paths:
     - vendor/bundle
-variables:
-  RIEMANN_VERSION: 0.3.0
 
 before_script:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system $RUBYGEMS_VERSION
+  - gem --version
+  - bundle -v
   - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
 
-syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.5.3-Puppet ~> 5:
+syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.5.3-Puppet ~> 6:
   stage: syntax
   image: ruby:2.5.3
   script:
-    - bundle exec rake syntax lint validate metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
+    - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
   variables:
     PUPPET_GEM_VERSION: '~> 6'
-
-smoke riemann puppet 5:
-  stage: smoke
-  image: ruby:2.5.3
-  variables:
-    PUPPET_GEM_VERSION: '~> 5'
-  script:
-  - apt update
-  - apt install openjdk-8-jre-headless -y
-  - wget -nv -O riemann.deb https://github.com/riemann/riemann/releases/download/${RIEMANN_VERSION}/riemann_${RIEMANN_VERSION}_all.deb
-  - dpkg -i riemann.deb
-  - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
-  - bundle update puppet
-  - bundle exec puppet --version
-  - bundle exec pdk build
-  - bundle exec puppet module install pkg/*.tar.gz
-  - bundle exec ./smoke/test 
 
 parallel_spec-Ruby 2.5.3-Puppet ~> 6:
   stage: unit
   image: ruby:2.5.3
   script:
-    - bundle exec rake spec
+    - bundle exec rake parallel_spec
   variables:
     PUPPET_GEM_VERSION: '~> 6'
 
-parallel_spec-Ruby 2.5.3-Puppet ~> 5:
-  stage: unit
-  image: ruby:2.5.3
-  script:
-    - bundle exec rake spec
-  variables:
-    PUPPET_GEM_VERSION: '~> 5'
-
-parallel_spec-Ruby 2.4.5-Puppet ~> 4:
+parallel_spec-Ruby 2.4.5-Puppet ~> 5:
   stage: unit
   image: ruby:2.4.5
   script:
-    - bundle exec rake spec
+    - bundle exec rake parallel_spec
   variables:
-    PUPPET_GEM_VERSION: '~> 4'
+    PUPPET_GEM_VERSION: '~> 5'
 
