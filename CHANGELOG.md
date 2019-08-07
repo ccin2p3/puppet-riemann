@@ -1,3 +1,8 @@
+# 2019-08-07 Release 1.1.0
+
+* add freebsd support thanks to Romain Tartière
+* add puppet 5 support thanks to Romain Tartière
+
 # 2018-04-30 Release 1.0.1
 
 * fix publish/subscribe
