@@ -19,19 +19,29 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "Debian"
+      "operatingsystem": "Debian",
+			"operatingsystemrelease": [
+				"8.0",
+				"9.0",
+				"10.0"
+			]
     },
     {
       "operatingsystem": "FreeBSD"
     },
     {
-      "operatingsystem": "RedHat"
+      "operatingsystem": "RedHat",
+			"operatingsystemrelease": [
+				"6.0",
+				"7.0",
+				"8.0"
+			]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">=4.9.0 < 6.0.0"
+      "version_requirement": ">=4.9.0 < 7.0.0"
     }
   ]
 }
