@@ -1,3 +1,7 @@
+# 2020-08-04 Release 1.2.0
+
+* add Redhat EL 8 support
+
 # 2019-08-07 Release 1.1.0
 
 * add freebsd support thanks to Romain Tartière
