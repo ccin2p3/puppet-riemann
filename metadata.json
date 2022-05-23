@@ -20,22 +20,23 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
-			"operatingsystemrelease": [
-				"8.0",
-				"9.0",
-				"10.0"
-			]
+      "operatingsystemrelease": [
+        "8.0",
+        "9.0",
+        "10.0",
+        "11.0"
+      ]
     },
     {
       "operatingsystem": "FreeBSD"
     },
     {
       "operatingsystem": "RedHat",
-			"operatingsystemrelease": [
-				"6.0",
-				"7.0",
-				"8.0"
-			]
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0",
+        "8.0"
+      ]
     }
   ],
   "requirements": [
