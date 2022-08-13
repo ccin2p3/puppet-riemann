@@ -34,7 +34,7 @@ define riemann::subscribe (
   $pubsub_var = $riemann::pubsub_var
 ) {
   $_sanitized_title = regsubst($title,' ','_')
-  $async_queue_name = "${facts['facts['networking']['hostname']']}-${_sanitized_title}"
+  $async_queue_name = "${facts['networking']['hostname']}-${_sanitized_title}"
   $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' ')),' ')
   # 'let' statement fragment
   @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
