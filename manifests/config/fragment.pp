@@ -13,7 +13,7 @@ define riemann::config::fragment (
   $content = $title,
   $section = 'root',
   $order = '42',
-  $subscriber = $::clientcert,
+  $subscriber = $trusted['clientcert'],
   $pubsub_var = getvar($riemann::pubsub_var)
 )
 {

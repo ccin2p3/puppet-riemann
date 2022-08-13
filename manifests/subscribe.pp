@@ -40,14 +40,14 @@ define riemann::subscribe (
   @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
     content    => template('riemann/subscribe-let.erb'),
     section    => "let streams ${streams} ${stream}",
-    subscriber => $::clientcert,
+    subscriber => $trusted['clientcert'],
     pubsub_var => getvar($pubsub_var),
   }
   # 'stream' statement
-  @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${facts['clientcert']}":
+  @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${trusted['clientcert']}":
     content    => template('riemann/subscribe-stream.erb'),
     section    => "streams ${streams} ${stream}",
-    subscriber => $::clientcert,
+    subscriber => $trusted['clientcert'],
     pubsub_var => getvar($pubsub_var),
   }
 }
