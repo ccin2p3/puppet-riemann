@@ -14,12 +14,12 @@ define riemann::config::fragment (
   $section = 'root',
   $order = '42',
   $subscriber = $::clientcert,
-  $pubsub_var = getvar($::riemann::pubsub_var)
+  $pubsub_var = getvar($riemann::pubsub_var)
 )
 {
   ::concat::fragment { "riemann::config ${title}":
     content => riemann::sexpr($content),
     target  => 'riemann_config',
-    order   => $order
+    order   => $order,
   }
 }

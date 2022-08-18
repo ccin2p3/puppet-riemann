@@ -17,6 +17,6 @@ class riemann::logging (
   }
   riemann::config::fragment { $title:
     content => "${debug_header}(logging/init {${options_str}})${debug_footer}",
-    order   => '12'
+    order   => '12',
   }
 }

@@ -11,7 +11,7 @@ define riemann::let (
   } else {
     $content_string = $content
   }
-  include ::riemann
+  include riemann
   if !defined(Riemann::Streams[$streams]) {
     riemann::streams { $streams: }
   }
@@ -19,6 +19,6 @@ define riemann::let (
   @riemann::config::fragment { "let ${title}":
     section    => "let streams ${streams}",
     subscriber => 'local',
-    content    => "      ${content_string}"
+    content    => "      ${content_string}",
   }
 }

@@ -31,22 +31,21 @@ define riemann::stream::publish (
     content    => $content[0],
     section    => "streams ${streams}",
     subscriber => 'local',
-    order      => "20-streams-${title}-23"
+    order      => "20-streams-${title}-23",
   }
   @riemann::config::fragment { "stream ${streams} publish ${title} part3":
     content    => $content[1],
     section    => "streams ${streams}",
     subscriber => 'local',
-    order      => "20-streams-${title}-26"
+    order      => "20-streams-${title}-26",
   }
   # collect stream functions from exported riemann::subscribe
-  $_pubsub_var = getvar($::riemann::pubsub_var)
+  $_pubsub_var = getvar($riemann::pubsub_var)
   Riemann::Config::Fragment <<| section == "let streams ${streams} ${stream}" and pubsub_var == $_pubsub_var and subscriber != $::clientcert |>> {
     order   => "50-${streams}-13"
   }
   Riemann::Config::Fragment <<| section == "streams ${streams} ${stream}" and pubsub_var == $_pubsub_var and subscriber != $::clientcert |>> {
     order   => "50-${streams}-25"
   }
-
 }
 # vim: ft=puppet

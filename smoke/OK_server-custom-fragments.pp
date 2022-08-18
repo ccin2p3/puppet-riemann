@@ -1,6 +1,6 @@
 #
 class {'riemann':
-  config_dir => '/tmp/riemann',
+  config_dir     => '/tmp/riemann',
   reload_command => '/bin/true',
 }
 
@@ -13,6 +13,6 @@ riemann::stream {'(by :service
           (index)))))':
 }
 riemann::config::fragment { 'my custom fragment':
-  content => '(periodically-expire 10 {:keep-keys [:host :service :tags]})'
+  content => '(periodically-expire 10 {:keep-keys [:host :service :tags]})',
 }
 include riemann::logging
