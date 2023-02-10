@@ -21,4 +21,3 @@ riemann::stream {'tag':
                 (tag "changed-state"
                   index))',
 }
-
