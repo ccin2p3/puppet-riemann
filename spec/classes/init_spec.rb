@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 os_fixtures = @os_fixtures
@@ -44,6 +46,7 @@ describe 'riemann' do
 
         it { expect { is_expected.to contain_class('riemann') }.to raise_error(Puppet::Error) }
       end
+
       describe 'on Scientific Linux 5' do
         let(:facts) do
           {

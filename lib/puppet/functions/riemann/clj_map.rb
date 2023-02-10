@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This converts a hash into a string containing a serialized clojure map.
 #
 # Example:
@@ -16,16 +18,13 @@ Puppet::Functions.create_function(:'riemann::clj_map') do
     return [] if arguments.empty?
 
     raise(Puppet::Error, 'clj_map(): only one argument accepted') unless arguments.length == 1
-    unless arguments[0].is_a?(Hash)
-      raise(Puppet::Error, 'clj_map(): argument must be a hash')
-    end
+    raise(Puppet::Error, 'clj_map(): argument must be a hash') unless arguments[0].is_a?(Hash)
 
     inner = []
     arguments[0].sort.each do |k, v|
       inner.push(":#{k} #{v}")
     end
-    result = '{' + inner.join(' ') + ')'
-    result
+    "{#{inner.join(' ')})"
   end
 end
 
