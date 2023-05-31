@@ -24,13 +24,9 @@ class riemann (
   $reload_command,
   $validate_cmd,
   $test_before_reload,
-  $pubsub_var,
+  Pattern['^::'] $pubsub_var,
   $debug,
 ) {
-
-  # validate parameters here
-  validate_re($pubsub_var, '^::','please specify only absolute top scope variable names')
-
   class { 'riemann::install': }
   -> class { 'riemann::config': }
   ~> class { 'riemann::service': }
