@@ -11,8 +11,8 @@
 #
 class riemann::profile::subscriber
 {
-  include ::riemann
-  include ::riemann::profile
-  include ::riemann::subscription
+  include riemann
+  include riemann::profile
+  include riemann::subscription
 }
 # vim: ft=puppet

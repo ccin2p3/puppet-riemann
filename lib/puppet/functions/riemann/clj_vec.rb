@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This converts an array into a string containing a serialized clojure vector.
 #
 # Example:
@@ -16,12 +18,9 @@ Puppet::Functions.create_function(:'riemann::clj_vec') do
     return [] if arguments.empty?
 
     raise(Puppet::Error, 'clj_vec(): only one argument accepted') unless arguments.length == 1
-    unless arguments[0].is_a?(Array)
-      raise(Puppet::Error, 'clj_vec(): argument must be an array')
-    end
+    raise(Puppet::Error, 'clj_vec(): argument must be an array') unless arguments[0].is_a?(Array)
 
-    result = '(' + arguments[0].join(' ') + ')'
-    result
+    "(#{arguments[0].join(' ')})"
   end
 end
 

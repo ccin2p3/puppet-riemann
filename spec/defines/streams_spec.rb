@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-os_fixtures = @os_fixtures
-
 describe 'riemann::streams' do
-  context 'supported operating systems' do
-    os_fixtures.each do |osname, osfixtures|
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
       describe 'without any parameters' do
         let(:params) { {} }
 
@@ -13,30 +15,19 @@ describe 'riemann::streams' do
             'default'
           end
 
-          describe "on #{osname}" do
-            let(:facts) do
-              osfixtures[:facts]
-            end
-
-            it { is_expected.to compile.with_all_deps }
-            it { is_expected.to contain_riemann__config__fragment('streams default header') }
-            it { is_expected.to contain_riemann__config__fragment('streams default footer') }
-          end
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_riemann__config__fragment('streams default header') }
+          it { is_expected.to contain_riemann__config__fragment('streams default footer') }
         end
+
         describe 'with "custom" title' do
           let :title do
             'custom'
           end
 
-          describe "on #{osname}" do
-            let(:facts) do
-              osfixtures[:facts]
-            end
-
-            it { is_expected.to compile.with_all_deps }
-            it { is_expected.to contain_riemann__config__fragment('streams custom header') }
-            it { is_expected.to contain_riemann__config__fragment('streams custom footer') }
-          end
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_riemann__config__fragment('streams custom header') }
+          it { is_expected.to contain_riemann__config__fragment('streams custom footer') }
         end
       end
     end

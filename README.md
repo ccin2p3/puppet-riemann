@@ -308,7 +308,7 @@ riemann::stream { 'rate':
   content => [
     'by [:service :host]',
     [
-      'coalesce', [ 'smap', 'folds/sum', [ 'with', { 'host' => 'nil' }, 'indexer' ] ] 
+      'coalesce', [ 'smap', 'folds/sum', [ 'with', { 'host' => 'nil' }, 'indexer' ] ]
     ]
   ]
 }

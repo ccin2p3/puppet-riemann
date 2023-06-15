@@ -12,6 +12,6 @@ define riemann::listen (
   }
   riemann::config::fragment { "listen_${title}":
     content => [ "${type}-server", $options ],
-    order   => '15'
+    order   => '15',
   }
 }

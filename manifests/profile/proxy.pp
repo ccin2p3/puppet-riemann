@@ -13,8 +13,8 @@
 #
 class riemann::profile::proxy ()
 {
-  include ::riemann
-  include ::riemann::profile
-  include ::riemann::publish
+  include riemann
+  include riemann::profile
+  include riemann::publish
 }
 # vim: ft=puppet

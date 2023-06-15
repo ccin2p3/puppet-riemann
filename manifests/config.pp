@@ -18,13 +18,13 @@ class riemann::config {
     $debug_header = ''
     $debug_footer = ''
   }
-  $config_dir = $::riemann::config_dir
-  $config_include_dir = $::riemann::config_include_dir
+  $config_dir = $riemann::config_dir
+  $config_include_dir = $riemann::config_include_dir
   file { $config_dir:
-    ensure => directory
+    ensure => directory,
   }
   -> file { "${config_dir}/${config_include_dir}":
-    ensure => directory
+    ensure => directory,
   }
   -> concat { 'riemann_config':
     ensure       => present,
@@ -33,18 +33,18 @@ class riemann::config {
   }
   riemann::config::fragment { 'header':
     content => template('riemann/riemann.config-header.erb'),
-    order   => '00'
+    order   => '00',
   }
   riemann::config::fragment { 'footer':
     content => template('riemann/riemann.config-footer.erb'),
-    order   => '999'
+    order   => '999',
   }
   if $riemann::manage_init_defaults {
-    $merged_init_config_hash = merge($::riemann::init_config_hash,$::riemann::init_config_hash)
-    file {$::riemann::init_config_file:
-      ensure  => present,
+    $merged_init_config_hash = merge($riemann::init_config_hash,$riemann::init_config_hash)
+    file {$riemann::init_config_file:
+      ensure  => file,
       content => template('riemann/init_config_file.erb'),
-      notify  => Service[$::riemann::service_name]
+      notify  => Service[$riemann::service_name],
     }
   }
 }

@@ -1,45 +1,36 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-os_fixtures = @os_fixtures
-
 describe 'riemann' do
-  context 'supported operating systems' do
-    os_fixtures.each do |osname, osfixtures|
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
       describe 'without any parameters' do
         let(:params) { {} }
 
-        describe "on #{osname}" do
-          let(:facts) do
-            osfixtures[:facts]
-          end
-
-          it { is_expected.to compile.with_all_deps }
-          it { is_expected.to contain_class('riemann') }
-          it { is_expected.to contain_class('riemann::config') }
-          it { is_expected.to contain_class('riemann::install').that_comes_before('Class[riemann::config]') }
-          it { is_expected.to contain_class('riemann::service').that_subscribes_to('Class[riemann::config]') }
-        end
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('riemann') }
+        it { is_expected.to contain_class('riemann::config') }
+        it { is_expected.to contain_class('riemann::install').that_comes_before('Class[riemann::config]') }
+        it { is_expected.to contain_class('riemann::service').that_subscribes_to('Class[riemann::config]') }
       end
+
       describe 'with init_defaults' do
-        let(:facts) do
-          osfixtures[:facts]
-        end
         let(:params) do
-          { manage_init_defaults: true }.merge(osfixtures[:params])
+          {
+            manage_init_defaults: true,
+            init_config_file: '/path/to/config'
+          }
         end
 
-        describe "on #{osname}" do
-          let :init_config_file do
-            osfixtures[:params][:init_config_file]
-          end
-
-          it { is_expected.to contain_file(init_config_file) }
-        end
+        it { is_expected.to contain_file('/path/to/config') }
       end
     end
   end
 
-  context 'unsupported operating system' do
+  context 'on unsupported operating system' do
     describe 'without any parameters' do
       let(:params) { {} }
 
@@ -53,6 +44,7 @@ describe 'riemann' do
 
         it { expect { is_expected.to contain_class('riemann') }.to raise_error(Puppet::Error) }
       end
+
       describe 'on Scientific Linux 5' do
         let(:facts) do
           {

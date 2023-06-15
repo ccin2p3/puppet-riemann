@@ -4,7 +4,7 @@ define riemann::stream (
   $streams = 'default',
 )
 {
-  include ::riemann
+  include riemann
   if !defined(Riemann::Streams[$streams]) {
     riemann::streams { $streams: }
   }
@@ -13,6 +13,6 @@ define riemann::stream (
   @riemann::config::fragment { "stream ${title}":
     section    => "streams ${streams}",
     subscriber => 'local',
-    content    => $sexpr
+    content    => $sexpr,
   }
 }

@@ -15,7 +15,7 @@ define riemann::streams (
   # let
   riemann::config::fragment { "let ${title} header":
     content => '(let [',
-    order   => "${order}-00"
+    order   => "${order}-00",
   }
   # let items given as params
   if (is_array($let)) {
@@ -29,11 +29,11 @@ define riemann::streams (
   }
   riemann::config::fragment { "let ${title} body":
     content => "      ${let_body}",
-    order   => "${order}-10"
+    order   => "${order}-10",
   }
   riemann::config::fragment { "let ${title} clientcert alias":
-    content => "      our-host \"${::clientcert}\"",
-    order   => "${order}-11"
+    content => "      our-host \"${facts['clientcert']}\"",
+    order   => "${order}-11",
   }
   # collect virtual and exported let items from riemann::let
   Riemann::Config::Fragment <| section == "let streams ${title}" and subscriber == 'local' |> {
@@ -41,11 +41,11 @@ define riemann::streams (
   }
   riemann::config::fragment { "let ${title} body end":
     content => ']',
-    order   => "${order}-15"
+    order   => "${order}-15",
   }
   riemann::config::fragment { "streams ${title} header":
     content => $header,
-    order   => "${order}-20"
+    order   => "${order}-20",
   }
   # collect stream functions from riemann::stream
   Riemann::Config::Fragment <| section == "streams ${title}" and subscriber == 'local' |> {
@@ -53,10 +53,10 @@ define riemann::streams (
   }
   riemann::config::fragment { "streams ${title} footer":
     content => $footer,
-    order   => "${order}-28"
+    order   => "${order}-28",
   }
   riemann::config::fragment { "let ${title} footer":
     content => ')',
-    order   => "${order}-99"
+    order   => "${order}-99",
   }
 }

@@ -37,7 +37,7 @@ class riemann (
   -> Class['riemann']
 
   if ($use_hiera) {
-    include '::riemann::hiera'
+    include 'riemann::hiera'
   }
 }
 # vim: ft=puppet

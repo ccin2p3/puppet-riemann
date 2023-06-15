@@ -23,7 +23,7 @@
 define riemann::subscribe (
   $batch = '200 1',
   $throttle = '1 10',
-  $exception_stream = sprintf('(throttle 1 10 (with {:host our-host :service "%s-%s" :state "warning"} (adjust [:event #(count %%)] #(info %%))))', $::hostname, regsubst($title,' ','_')),
+  $exception_stream = sprintf('(throttle 1 10 (with {:host our-host :service "%s-%s" :state "warning"} (adjust [:event #(count %%)] #(info %%))))', $facts['networking']['hostname'], regsubst($title,' ','_')),
   $async_queue_options = {
     ':core-pool-size' => '4',
     ':max-pool-size'  => '128',
@@ -31,24 +31,24 @@ define riemann::subscribe (
   },
   $stream = $title,
   $streams = 'default',
-  $pubsub_var = $::riemann::pubsub_var
+  $pubsub_var = $riemann::pubsub_var
 ) {
   $_sanitized_title = regsubst($title,' ','_')
-  $async_queue_name = "${::hostname}-${_sanitized_title}"
+  $async_queue_name = "${facts['networking']['hostname']}-${_sanitized_title}"
   $async_queue_options_string = join(sort(join_keys_to_values($async_queue_options, ' ')),' ')
   # 'let' statement fragment
   @@riemann::config::fragment { "let ${streams} publish ${async_queue_name}":
     content    => template('riemann/subscribe-let.erb'),
     section    => "let streams ${streams} ${stream}",
-    subscriber => $::clientcert,
-    pubsub_var => getvar($pubsub_var)
+    subscriber => $trusted['clientcert'],
+    pubsub_var => getvar($pubsub_var),
   }
   # 'stream' statement
-  @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${::clientcert}":
+  @@riemann::config::fragment { "stream ${streams} publish ${stream} part2 ${trusted['clientcert']}":
     content    => template('riemann/subscribe-stream.erb'),
     section    => "streams ${streams} ${stream}",
-    subscriber => $::clientcert,
-    pubsub_var => getvar($pubsub_var)
+    subscriber => $trusted['clientcert'],
+    pubsub_var => getvar($pubsub_var),
   }
 }
 # vim: ft=puppet
