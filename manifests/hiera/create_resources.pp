@@ -4,9 +4,9 @@ define riemann::hiera::create_resources {
   $varname = "${riemann::hiera::prefix}${rsname}"
   create_resources (
     $rsname,
-    hiera_hash(
+    lookup(
       $varname,
-      {}
+      { default_value => {} }
     )
   )
 }

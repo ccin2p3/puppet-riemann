@@ -1,15 +1,13 @@
 #
 define riemann::let (
-  $content = $title,
-  $streams = 'default',
+  Variant[Array[String[1]],Hash[String[1], String[1]],String[1]] $content = $title,
+  String[1] $streams = 'default',
 )
 {
-  if (is_array($content)) {
-    $content_string = join(flatten($content), ' ')
-  } elsif (is_hash($content)) {
-    $content_string = join(sort(join_keys_to_values($content, ' ')),' ')
-  } else {
-    $content_string = $content
+  $content_string = $content ? {
+    Array   => join(flatten($content), ' '),
+    Hash    => join(sort(join_keys_to_values($content, ' ')),' '),
+    String  => $content,
   }
   include riemann
   if !defined(Riemann::Streams[$streams]) {

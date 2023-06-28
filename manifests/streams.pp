@@ -5,10 +5,10 @@
 # and construct its contents using riemann::stream defines
 #
 define riemann::streams (
-  $let = [],
-  $order = "50-${title}",
-  $header = '(streams',
-  $footer = ')',
+  Variant[Array[String[1]], Hash[String[1], String[1]], String[1]] $let = [],
+  String[1] $order = "50-${title}",
+  String[1] $header = '(streams',
+  String[1] $footer = ')',
 )
 {
   include riemann
@@ -18,14 +18,10 @@ define riemann::streams (
     order   => "${order}-00",
   }
   # let items given as params
-  if (is_array($let)) {
-    $let_body = join($let,' ')
-  } elsif (is_hash($let)) {
-    $let_body = join(sort(join_keys_to_values($let,' ')),' ')
-  } elsif (is_string($let)) {
-    $let_body = $let
-  } else {
-    fail("streams: 'let' must be array, hash or string")
+  $let_body = $let ? {
+    Array   => join($let,' '),
+    Hash    => join(sort(join_keys_to_values($let,' ')),' '),
+    default => $let,
   }
   riemann::config::fragment { "let ${title} body":
     content => "      ${let_body}",
