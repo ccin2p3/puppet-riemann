@@ -6,7 +6,7 @@ class {'riemann':
 include 'riemann::logging'
 
 riemann::streams {'foo':
-  let     => { 'index' => '(index)' },
+  let => { 'index' => '(index)' },
 }
 
 riemann::let { 'aggregate':

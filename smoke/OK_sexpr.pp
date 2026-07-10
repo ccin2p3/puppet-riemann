@@ -3,11 +3,11 @@ $a = [ 'where', ['service','"users/users"'],
     [ 'coalesce',
       [ 'throttle', 1, 1,
         [ 'smap', 'folds/sum',
-          [ 'with', { 'host' => 'nil' }, 'index' ]
-        ]
-      ]
-    ]
-  ]
+          [ 'with', { 'host' => 'nil' }, 'index' ],
+        ],
+      ],
+    ],
+  ],
 ]
 
 $b = [ 'a','b','c' ]

@@ -9,8 +9,8 @@ riemann::config::fragment { 'reaper':
 }
 riemann::config::fragment { 'index':
   content => ['def', 'indexer',
-    [ 'default', { 'ttl' => 30, 'state' => '"ok"' }, [ 'index' ]
-    ]
+    [ 'default', { 'ttl' => 30, 'state' => '"ok"' }, [ 'index' ],
+    ],
   ],
   order   => '11',
 }
