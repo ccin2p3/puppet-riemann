@@ -25,8 +25,8 @@ riemann::config::fragment { 'plop':
   content => [
     'def', 'hostname',
     [ '.getHostName',
-      ['java.net.InetAddress/getLocalHost']
-    ]
+      ['java.net.InetAddress/getLocalHost'],
+    ],
   ],
   order   => '01',
 }
@@ -44,11 +44,11 @@ riemann::stream { 'compute total users':
       [ 'coalesce',
         [ 'throttle', 1, 1,
           [ 'smap', 'folds/sum',
-            [ 'with', { 'host' => 'nil' }, 'index' ]
-          ]
-        ]
-      ]
-    ]
+            [ 'with', { 'host' => 'nil' }, 'index' ],
+          ],
+        ],
+      ],
+    ],
   ],
 }
 # hash style
@@ -60,7 +60,7 @@ riemann::stream { 'out of ideas for title':
         'service' => '"plop"',
         'ttl'     => 100,
       },
-    ]
+    ],
   ],
 }
 #

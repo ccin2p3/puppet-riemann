@@ -40,16 +40,14 @@ Puppet::Functions.create_function(:'riemann::sexpr') do
     sp = (' ' * level * 2) + ('  ' * indent)
     case arg
     when Array
-      inner = []
-      arg.each do |a|
-        inner.push(_serel(a, indent, level + 1))
+      inner = arg.map do |a|
+        _serel(a, indent, level + 1)
       end
       result += "\n" if level.positive?
       result += "#{sp}(#{inner.join(' ')})"
     when Hash
-      inner = []
-      arg.sort.each do |k, v|
-        inner.push(":#{k} #{v}")
+      inner = arg.sort.map do |k, v|
+        ":#{k} #{v}"
       end
       result += "{#{inner.join(' ')}}"
     else

@@ -9,8 +9,8 @@ riemann::config::fragment { 'reaper':
 }
 riemann::config::fragment { 'index':
   content => ['def', 'indexer',
-    [ 'default', { 'ttl' => 30, 'state' => '"ok"' }, [ 'index' ]
-    ]
+    [ 'default', { 'ttl' => 30, 'state' => '"ok"' }, [ 'index' ],
+    ],
   ],
   order   => '11',
 }
@@ -34,8 +34,8 @@ riemann::stream { 'index everything':
 riemann::stream { 'rate':
   content => [ 'by [:service :host]',
     [
-      'coalesce', [ 'smap', 'folds/sum', [ 'with', { 'host' => 'nil' }, 'indexer' ]]
-    ]
+      'coalesce', [ 'smap', 'folds/sum', [ 'with', { 'host' => 'nil' }, 'indexer' ]],
+    ],
   ],
 }
 

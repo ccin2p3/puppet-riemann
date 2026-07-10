@@ -20,9 +20,8 @@ Puppet::Functions.create_function(:'riemann::clj_map') do
     raise(Puppet::Error, 'clj_map(): only one argument accepted') unless arguments.length == 1
     raise(Puppet::Error, 'clj_map(): argument must be a hash') unless arguments[0].is_a?(Hash)
 
-    inner = []
-    arguments[0].sort.each do |k, v|
-      inner.push(":#{k} #{v}")
+    inner = arguments[0].sort.map do |k, v|
+      ":#{k} #{v}"
     end
     "{#{inner.join(' ')})"
   end

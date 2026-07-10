@@ -18,5 +18,5 @@ riemann::subscribe { 'riemann internals':
   stream => 'service~riemann',
 }
 riemann::subscribe { 'changed state':
-  stream     => 'changed-state',
+  stream => 'changed-state',
 }

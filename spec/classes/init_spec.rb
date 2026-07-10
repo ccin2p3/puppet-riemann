@@ -21,7 +21,7 @@ describe 'riemann' do
         let(:params) do
           {
             manage_init_defaults: true,
-            init_config_file: '/path/to/config'
+            init_config_file: '/path/to/config',
           }
         end
 
